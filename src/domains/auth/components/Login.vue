@@ -2,7 +2,7 @@
   <div class="login col-md-12 col-xs-12">
     <div class="container">
       <div class="login-form">
-        <h5>Welcome back, friend</h5>
+        <h5 class="welcome">Welcome back, friend</h5>
         <div class="form-group relative">
           <input class="text-input" type="text" name="login" id="login">
           <i class="fa fa-user"></i>
@@ -11,12 +11,12 @@
           <input class="text-input" type="password" name="password" id="password">
           <i class="fa fa-lock"></i>
         </div>
-        <a href="http://">Forgot your password?</a>
+        <a class="forgot-password" href="http://">Forgot your password?</a>
         <div class="form-group">
-          <button class="btn-block " @click.prevent="">Log in</button>
+          <button class="btn-block btn-login" @click.prevent="">Log in</button>
         </div>
         <p class="divider">or</p>
-        <button class="btn-block" @click.prevent="">Log in with Facebook</button>
+        <button class="btn-block btn-facebook" @click.prevent="">Log in with Facebook</button>
       </div>
     </div>
   </div>
@@ -29,12 +29,31 @@ export default {
 </script>
 
 <style scoped>
+
 h5 {
   color: #fff;
 }
 
 .login {
   background-color: #02DFBE;
+}
+
+.welcome {
+  margin: 0;
+  margin-bottom: 5px; 
+}
+
+.background-login {
+  background-image: url()
+} 
+
+.forgot-password {
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 5px;
 }
 
 .login-form {
@@ -52,7 +71,7 @@ h5 {
 .login-form i {
   position: absolute;
   top: 14px;
-  left: 10px;
+  left: 15px;
   color:#1ED9BA;
 }
 
@@ -67,19 +86,36 @@ h5 {
   border-style: solid;
   background-color: #FDF3EA;
   width: 270px;
-  padding-left: 30px;
+  padding-left: 35px;
   outline: 0;
   color: #A39C92;
 }
 
 .text-input:focus {
   border-color: #323031;
-  border-left-width: 5px;
+  border-left-width: 10px;
+  padding-left: 25px;
 }
 
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.btn-login {
+  height: 40px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #323031;
+  color: white;
+}
+
+.btn-facebook {
+  height: 40px;
+  border-radius: 3px;
+  border: 0;
+  background-color: 	#3b5998;
+  color: white;
 }
 
 .divider{
@@ -88,10 +124,10 @@ h5 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 0 1em;
+  margin: 1em 1em;
 }
 
-.divider::before{
+.divider::before {
   content: '';
   height: .08em;
   background: white;
