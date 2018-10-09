@@ -1,17 +1,19 @@
 <template>
   <div class="login col-md-12 col-xs-12">
     <div class="container">
-      <div class="login-form">
+      <div class="login-form background-login">
         <h5 class="welcome">Welcome back, friend</h5>
         <div class="form-group relative">
-          <input class="text-input" type="text" name="login" id="login">
+          <input class="text-input" type="text" name="login" id="login" placeholder="EMAIL ADRESS OR LOGIN">
           <i class="fa fa-user"></i>
         </div>
         <div class="form-group relative">
-          <input class="text-input" type="password" name="password" id="password">
+          <input class="text-input" type="password" name="password" id="password" placeholder="PASSWORD">
           <i class="fa fa-lock"></i>
         </div>
-        <a class="forgot-password" href="http://">Forgot your password?</a>
+        <div class="forgot-password">
+          <a class="forgot-password" href="http://">Forgot your password?</a>
+        </div>
         <div class="form-group">
           <button class="btn-block btn-login" @click.prevent="">Log in</button>
         </div>
@@ -35,32 +37,36 @@ h5 {
 }
 
 .login {
-  background-color: #02DFBE;
+  background-color: #65DFBE;
+  height: 550px;
 }
 
 .welcome {
   margin: 0;
-  margin-bottom: 5px; 
+  margin-bottom: 7px; 
 }
 
 .background-login {
-  background-image: url()
+  position: relative;
+  width: 100%;
+  background-image: url('/assets/img/login.jpg')
 } 
 
 .forgot-password {
-  padding: 0;
-  margin: 0;
+  padding-bottom: 5px;
   color: #fff;
   text-align: center;
-  text-decoration: none;
-  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form {
   width: 270px;
   top: 0;
   left: 0;
-  padding-top: 120px;
+  padding-top: 135px;
 }
 
 .login-form .form-group {
@@ -93,8 +99,8 @@ h5 {
 
 .text-input:focus {
   border-color: #323031;
-  border-left-width: 10px;
-  padding-left: 25px;
+  border-left-width: 7px;
+  padding-left: 28px;
 }
 
 .btn-block {
