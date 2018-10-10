@@ -19,16 +19,13 @@
         </div>
         <p class="divider">or</p>
         <button class="btn-block btn-facebook" @click.prevent="">Log in with Facebook</button>
+        <div class="login-users">
+          <img src="./../../../assets/img/login-users.png" alt="">
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
 
 <style scoped>
 
@@ -37,8 +34,21 @@ h5 {
 }
 
 .login {
-  background-color: #65DFBE;
-  height: 550px;
+  width: 100%;
+  height: 100%;
+  background: url('./../../../assets/img/login.jpg') center center no-repeat;
+  background-size: cover;
+}
+
+.login::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #65DFBE, transparent);
+  opacity: .9;
 }
 
 .welcome {
@@ -46,11 +56,16 @@ h5 {
   margin-bottom: 7px; 
 }
 
-.background-login {
-  position: relative;
-  width: 100%;
-  background-image: url('/assets/img/login.jpg')
-} 
+.login-users {
+  position: absolute;
+  top: 60px;
+  left: 410px;
+}
+
+.login-users > img {
+  height: 70px;
+  width: 70px;
+}
 
 .forgot-password {
   padding-bottom: 5px;
@@ -63,10 +78,12 @@ h5 {
 }
 
 .login-form {
+  position: relative;
   width: 270px;
   top: 0;
   left: 0;
   padding-top: 135px;
+  padding-bottom: 135px;
 }
 
 .login-form .form-group {
