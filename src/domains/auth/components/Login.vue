@@ -5,14 +5,22 @@
         <div class="col-md-5 col-xs-5">
           <div class="login-form">
             <h5 class="welcome">Welcome back, friend</h5>
-            <div class="form-group relative">
-              <input class="text-input" type="text" name="login" id="login" placeholder="EMAIL ADRESS OR LOGIN">
-              <i class="fa fa-user"></i>
-            </div>
-            <div class="form-group relative">
-              <input class="text-input" type="password" name="password" id="password" placeholder="PASSWORD">
-              <i class="fa fa-lock"></i>
-            </div>
+            <b-input
+              :hasIcon="true"
+              :placeholder="'EMAIL ADRESS OR LOGIN'"
+              :name="'login'"
+              :classIcon="'fa fa-user'"
+              :value="model">
+            </b-input>
+            <b-input
+              :hasIcon="true"
+              :placeholder="'PASSWORD'"
+              :name="'password'"
+              :type="'password'"
+              :classIcon="'fa fa-lock'"
+              :id="'password'"
+              :value="model">
+            </b-input>
             <div class="forgot-password">
               <a class="forgot-password" href="http://">Forgot your password?</a>
             </div>
@@ -30,23 +38,27 @@
         <div class="col-md-6 col-xs-6">
           <div class="create-form">
             <h5 class="welcome">You are new here?</h5>
-            <div class="form-group relative">
-              <input class="text-input" type="text" name="email" id="email" placeholder="EMAIL ADRESS OR LOGIN">
-            </div>
-            <div class="form-group relative">
-              <input class="text-input" type="text" name="firstName" id="firstName" placeholder="FIRST NAME">
-            </div>
-            <div class="form-group relative">
-              <input class="text-input" type="text" name="lastName" id="lastName" placeholder="LAST NAME">
-            </div>
-            <div class="form-group relative">
-              <input class="text-input" type="password" name="createPassword" id="createPassword" placeholder="PASSWORD">
-              <i class="fa fa-lock"></i>
-            </div>
-            <div class="form-group relative">
-              <input class="text-input" type="password" name="confirmPassword" id="confirmPassword" placeholder="CONFIRM PASSWORD">
-              <i class="fa fa-lock"></i>
-            </div>
+            <b-input :placeholder="'EMAIL ADRESS'" :name="'email'" :id="'email'" :value="model" :type="'email'"></b-input>
+            <b-input :placeholder="'FIRST NAME'" :name="'firstName'" :id="'firstName'" :value="model"></b-input>
+            <b-input :placeholder="'LAST NAME'" :name="'lastName'" :id="'lastName'" :value="model"></b-input>
+            <b-input
+              :hasIcon="true"
+              :placeholder="'PASSWORD'"
+              :type="'password'"
+              :name="'createPassword'"
+              :classIcon="'fa fa-lock'"
+              :id="'createPassword'"
+              :value="model">
+            </b-input>
+            <b-input
+              :hasIcon="true"
+              :placeholder="'CONFIRM PASSWORD'"
+              :type="'password'"
+              :name="'confirmPassword'"
+              :classIcon="'fa fa-lock'"
+              :id="'confirmPassword'"
+              :value="model">
+            </b-input>
             <div class="col-md-12">
               <input type="checkbox" class="form-checkbox" name="agree" id="">
               <span class="checkbox-text">
@@ -69,7 +81,20 @@
   </div>
 </template>
 
-<style scoped>
+<script>
+import BInput from './../../../components/BInput.vue'
+export default {
+  components: {
+    BInput
+  },
+  data: () => ({
+    model: ''
+  })
+}
+</script>
+
+
+<style>
 
 h5 {
   color: #fff;
@@ -129,44 +154,10 @@ h5 {
 }
 
 .create-form {
+  position: relative;
   width: 270px;
   padding-top: 125px;
   padding-bottom: 135px;
-}
-
-.login-form .form-group {
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.login-form i {
-  position: absolute;
-  top: 14px;
-  left: 15px;
-  color:#1ED9BA;
-}
-
-.create-form i {
-  position: absolute;
-  top: 14px;
-  left: 15px;
-  color:#1ED9BA;
-}
-
-.relative {
-  position: relative;
-}
-
-.text-input {
-  margin-bottom: 10px;
-  height: 40px;
-  border-width: 0;
-  border-style: solid;
-  background-color: #FDF3EA;
-  width: 270px;
-  padding-left: 35px;
-  outline: 0;
-  color: #A39C92;
 }
 
 .form-checkbox {
@@ -223,12 +214,6 @@ input:checked ~ .form-checkbox:after {
   margin-top: 110px;
   padding-right: 40px;
   height: 270px;
-}
-
-.text-input:focus {
-  border-color: #323031;
-  border-left-width: 7px;
-  padding-left: 28px;
 }
 
 .btn-block {
