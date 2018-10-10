@@ -41,13 +41,13 @@
       <section class="col-md-3">
         <h2 >SOCIAL MEDIA</h2>
         <a class="social-image" href="#" :key="index" v-for="(images, index) in socialImages">
-          <img :src="images.image" :alt="images.alt">
+          <img class="icon" :src="images.imageLink" :alt="images.alt">
         </a>
       </section>
       <section class="col-md-3">
         <h2>DOWNLOADS</h2>
         <a href="#" :key="index" v-for="(images, index) in downloadImages">
-          <img :src="images.imageLink" :alt="images.alt">
+          <img class="stores" :src="images.imageLink" :alt="images.alt">
         </a>
       </section>
     </div>
@@ -60,6 +60,9 @@
 <script>
 import Appstore from '@/assets/img/appstore.png';
 import Google from '@/assets/img/googleplay.png';
+import Facebook from '@/assets/img/facebook.png';
+import Twitter from '@/assets/img/twitter.png';
+import Instagram from '@/assets/img/instagram.png';
 
 export default {
   name: 'Login',
@@ -76,16 +79,16 @@ export default {
     ],
     socialImages: [
       {
-        imageLink: Appstore,
-        alt: 'App Store Download'
+        imageLink: Facebook,
+        alt: 'Facebook'
       },
       {
-        imageLink: Google,
-        alt: 'Google Play Download'
+        imageLink: Twitter,
+        alt: 'Twitter'
       },
       {
-        imageLink: Google,
-        alt: 'Google Play Download'
+        imageLink: Instagram,
+        alt: 'Instagram'
       }
     ]
   })
@@ -99,7 +102,7 @@ ul {
   margin-left: 15px;
 }
 
-img {
+.stores {
   height: 45px;
   width: 160px;
   margin-bottom: 5px;
@@ -116,6 +119,12 @@ h2 {
 
 .social-image {
   display: inline-block;
+}
+
+.social-image .icon {
+  height: 45px;
+  width: 45px;
+  margin-right: 15px;
 }
 
 section {
