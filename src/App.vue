@@ -25,6 +25,16 @@ export default {
 @import url('assets/css/bootstrap.min.css');
 @import url('assets/css/bootstrap-theme.min.css');
 
+@font-face {
+  font-family: CircularStd-Black;
+  src: url('assets/fonts/CircularStd-Black.otf');
+}
+
+body {
+  font-family: CircularStd-Black;
+  font-weight: 200;
+}
+
 main {
   flex-grow: 1;
 }

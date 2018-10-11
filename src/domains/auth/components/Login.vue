@@ -38,9 +38,25 @@
         <div class="col-md-6 col-xs-6">
           <div class="create-form">
             <h5 class="welcome">You are new here?</h5>
-            <b-input :placeholder="'EMAIL ADRESS'" :name="'email'" :id="'email'" :value="model" :type="'email'"></b-input>
-            <b-input :placeholder="'FIRST NAME'" :name="'firstName'" :id="'firstName'" :value="model"></b-input>
-            <b-input :placeholder="'LAST NAME'" :name="'lastName'" :id="'lastName'" :value="model"></b-input>
+            <b-input
+              :placeholder="'EMAIL ADRESS'"
+              :name="'email'"
+              :id="'email'"
+              :value="model"
+              :type="'email'">
+            </b-input>
+            <b-input
+              :placeholder="'FIRST NAME'"
+              :name="'firstName'"
+              :id="'firstName'"
+              :value="model">
+            </b-input>
+            <b-input
+              :placeholder="'LAST NAME'"
+              :name="'lastName'"
+              :id="'lastName'"
+              :value="model">
+            </b-input>
             <b-input
               :hasIcon="true"
               :placeholder="'PASSWORD'"
@@ -207,6 +223,7 @@ input:checked ~ .form-checkbox:after {
   color: #fff;
   padding-left: 10px;
   padding-top: 0;
+  font-size: 12px;
 }
 
 .divider-right {

@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <input :class="className" :type="type" :name="name" :id="id" :value="value" :placeholder="placeholder">
-    <i v-if="hasIcon" :class="classIcon"></i>
+    <i v-if="hasIcon" class="input-icon" :class="classIcon"></i>
   </div>
 </template>
 
@@ -56,9 +56,9 @@ export default {
   margin-left: 0;
 }
 
-.form-group i {
-  position: relative;
-  bottom: 42px;
+.form-group > .input-icon {
+  position: absolute;
+  margin-top: 10px;
   left: 15px;
   color:#1ED9BA;
 }
