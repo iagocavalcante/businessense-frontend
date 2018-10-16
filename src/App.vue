@@ -30,6 +30,16 @@ export default {
   src: url('assets/fonts/CircularStd-Black.otf');
 }
 
+@font-face {
+  font-family: CircularStd-Book;
+  src: url('assets/fonts/CircularStd-Book.otf');
+}
+
+@font-face {
+  font-family: CircularStd-Medium;
+  src: url('assets/fonts/CircularStd-Medium.otf');
+}
+
 body {
   font-family: CircularStd-Black;
   font-weight: 200;
@@ -59,6 +69,22 @@ header, main, footer {
   padding-top: 5px;
 }
 
+.pb-30 {
+  padding-bottom: 30px;
+}
+
+.pb-20 {
+  padding-bottom: 20px;
+}
+
+.pb-10 {
+  padding-bottom: 10px;
+}
+
+.pb-5 {
+  padding-bottom: 5px;
+}
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -81,6 +107,14 @@ header, main, footer {
 
 .mb-5 {
   margin-bottom: 5px;
+}
+
+.label-left {
+  text-align: left;
+}
+
+.label-right {
+  text-align: right;
 }
 
 

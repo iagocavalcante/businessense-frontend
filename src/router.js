@@ -17,6 +17,11 @@ export default new Router({
       component: () => import('./domains/auth/components/Login')
     },
     {
+      path: '/dashboard/welcome',
+      name: 'welcome',
+      component: () => import('./domains/dashboard/components/WelcomeUser')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

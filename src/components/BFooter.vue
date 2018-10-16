@@ -138,7 +138,7 @@ section {
 }
 
 .content-footer {
-  background-color: #FAF4EB;
+  background-color:rgb(250,244,235);
   width: 100%;
 }
 

@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="login col-md-12 col-xs-12">
     <div class="container">
       <div class="row">
@@ -25,7 +25,7 @@
               <a class="forgot-password" href="http://">Forgot your password?</a>
             </div>
             <div class="form-group pt-10">
-              <button class="btn-block btn-login" @click.prevent="">Log in</button>
+              <button class="btn-block btn-login" @click.prevent="login">Log in</button>
             </div>
             <div class="login-users pt-30">
               <img src="./../../../assets/img/login-users.png" alt="">
@@ -105,12 +105,17 @@ export default {
   },
   data: () => ({
     model: ''
-  })
+  }),
+  methods: {
+    login () {
+      this.$router.replace('welcome')
+    }
+  }
 }
 </script>
 
 
-<style>
+<style scoped>
 
 h5 {
   color: #fff;
