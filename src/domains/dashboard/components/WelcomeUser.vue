@@ -18,7 +18,7 @@
                 <select class="form-industry mt-10" name="" id="">
                   <option value="" :key="industry.value" v-for="industry in industries">{{industry.label}}</option>
                 </select>
-                <button class="plus-button" @click.prevent="login">+</button>
+                <button class="plus-button" @click.prevent="">+</button>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
@@ -30,7 +30,7 @@
                   <img class="person" src="./../../../assets/img/Icones-07.png" alt="">
                 </div>
                 <div class="pt-10 label-right button-padding">
-                  <button class="btn-next-step" @click.prevent="login">Next Step</button>
+                  <button class="btn-next-step" @click.prevent="goToInsights">Next Step</button>
                 </div>
               </div>
               <div class="col-md-2"></div>
@@ -39,15 +39,13 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 col-xs-12 second">
-      <h1>Welcome <span class="user">User!</span></h1>
-      <h2>We need to ask you 2 simple <br> questions to get started</h2>
-    </div>
+    <div class="col-md-12 col-xs-12 second"></div>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Welcome',
   data: () => ({
     industries: [
       {
@@ -67,7 +65,12 @@ export default {
         value: 4
       },
     ]
-  })
+  }),
+  methods: {
+    goToInsights () {
+      this.$router.push('/dashboard/insights')
+    }
+  }
 }
 </script>
 
@@ -91,7 +94,7 @@ h1 {
   display: block;
   width: 100%;
   height: 550px;
-  background-image: linear-gradient(90deg, rgb(241, 243, 242, 0.5));
+  background-image: url('./../../../assets/img/background-dash.jpg');
   background-position: center top;
   background-size: cover;
 }

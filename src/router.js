@@ -22,6 +22,11 @@ export default new Router({
       component: () => import('./domains/dashboard/components/WelcomeUser')
     },
     {
+      path: '/dashboard/insights',
+      name: 'insigths',
+      component: () => import('./domains/dashboard/components/Insights')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

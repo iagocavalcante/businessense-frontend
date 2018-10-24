@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-5 col-xs-5">
           <div class="login-form">
-            <h5 class="welcome">Welcome back, friend</h5>
+            <h5 class="welcome">Welcome back</h5>
             <b-input
               :hasIcon="true"
               :placeholder="'EMAIL ADRESS OR LOGIN'"
@@ -108,7 +108,7 @@ export default {
   }),
   methods: {
     login () {
-      this.$router.replace('welcome')
+      this.$router.replace('/dashboard/welcome')
     }
   }
 }
