@@ -2,214 +2,86 @@
   <div class="container">
     <div class="col-md-12 col-xs-12"> 
       <div class="row">
-        <div class="col-md-3 col-xs-3">
+        <div class="col-md-4 col-xs-4">
           <h1>Tell more to us about your insights</h1>
           <hr class="about">
-          <div>
-            <div class="new-block" style="background-color:#669999;">
-              Quadrados
+          <div class="col-md-2 new-block" style="background-color:#66CCCC;">
+            Type new one here
+            <div class="new-button">
+              <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
             </div>
-            <div class="text">
-              <p>Quadrados</p>
+          </div>
+          <div class="col-md-6 text">
+            <p>also you can 
+              add your
+              own insights.
+              we are able to
+              improve :)
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8 col-xs-8">
+          <div class="header-insights">
+            <div class="col-md-4 col-xs-4">
+              <p class="pain-points">your pain points</p>
+            </div>
+            <div class="col-md-8 col-xs-8 pull-right">
+              <span><i class="fa fa-info"></i></span>
+            </div>
+          </div>
+          <hr class="about">
+          <div>
+            <div class="col-md-2 margin-blocks">
+              <div class="blocks" style="background-color:#669999;">
+                Decreasing
+                profits
+                <div class="buttons">
+                  <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
+                  <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 margin-blocks">
+              <div class="blocks" style="background-color:#669999;">
+                Decreasing
+                profits
+                <div class="buttons">
+                  <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
+                  <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 margin-blocks">
+              <div class="blocks" style="background-color:#669999;">
+                Decreasing
+                profits
+                <div class="buttons">
+                  <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
+                  <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 margin-blocks">
+              <div class="blocks" style="background-color:#669999;">
+                Decreasing
+                profits
+                <div class="buttons">
+                  <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
+                  <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-9 col-xs-9">
-          <div class="header-insights">
-            <p class="pain-points">your pain points</p>
+        <div class="col-md-12 issues">
+          <div class="col-md-4">
+            <span class="i fa fa-exclamation-triangle"></span>
           </div>
-          <hr class="about">
-          <div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="blocks" style="background-color:#669999;">
-                Decreasing
-                profits
-                <div class="buttons">
-                  <a href="" class="btn">+</a>
-                  <a href="" class="btn">-</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 issues">
-            <p>issues connected to your Pain Points</p>
+          <div class="col-md-8">
+            <p class="pain-points">issues connected to your Pain Points</p>
             <hr class="about">
-            <div class="col-md-9 list-pain-points">
+            <div class="list-pain-points">
               <ul>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li>
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
                 <li>
                   <div class="col-md-8">teste</div>
                   <div class="col-md-4">teste teste teste</div>
@@ -220,9 +92,9 @@
                 </li>
               </ul>
             </div>
-            <div class="pt-10 label-right button-padding">
-              <button class="btn-next-step" @click.prevent="goToInsights">Next Step</button>
-            </div>
+          </div>
+          <div class="pt-10 label-right button-padding">
+            <button class="btn-next-step" @click.prevent="goToInsights">Next Step</button>
           </div>
         </div>
       </div>
@@ -238,11 +110,14 @@ export default {
 
 <style scoped>
 .header-insights {
-  height: 85px;;
+  height: 99px;
+  padding-top: 75px;
 }
 
 .pain-points {
-  padding-top: 75px;
+  display: inline;
+  color: #66CCCC;
+  font-size: 20px;
 }
 
 .about {
@@ -250,19 +125,34 @@ export default {
 }
 
 .blocks {
-  margin-top: 20px;
+  margin-top: 10px;
   height: 90px;
   width: 120px;
   border-radius: 4px;
   padding: 10px;
 }
 
+.text {
+  color: #66CCCC;
+}
+
 .new-block {
-  margin-top: 20px;
+  color: #fff;
+  margin-top: 10px;
   height: 90px;
   width: 120px;
   border-radius: 4px;
   padding: 10px;
+}
+
+.margin-blocks {
+  margin-right: 20px;
+}
+
+.new-button {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }
 
 .box-center {
@@ -273,12 +163,17 @@ export default {
 .buttons {
   position: absolute;
   bottom: 0;
-  right: 10px;
+  right: -16px;
 }
 
 .btn {
-  padding: 5px;
+  padding: 0.15em;
   font-size: 18px;
+  color: #fff;
+}
+
+.pull-right {
+  text-align: right;
 }
 
 .issues {
