@@ -27,6 +27,16 @@ export default new Router({
       component: () => import('./domains/dashboard/components/Insights')
     },
     {
+      path: '/dashboard/risks',
+      name: 'risks',
+      component: () => import('./domains/dashboard/components/Risk')
+    },
+    {
+      path: '/dashboard/possible-solutions',
+      name: 'possible-solutions',
+      component: () => import('./domains/dashboard/components/PossibleSolution')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
