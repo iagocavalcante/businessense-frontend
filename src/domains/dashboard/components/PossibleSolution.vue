@@ -4,7 +4,12 @@
       <div class="row">
         <div class="page-title">
           <div style="text-align: start;" class="container">
-            <a href=""><span><i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i></span>back to dashboard</a>
+            <a class="a-page-title" href="">
+              <span>
+                <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
+              </span>
+              Back to dashboard
+            </a>
           </div>
           <h1>Possible Solutions</h1>
         </div>
@@ -14,30 +19,25 @@
       <div class="col-md-12 col-xs-12"> 
         <div class="row">
           <div style="border-bottom: 1px solid #000; padding-bottom: 24px;" class="col-md-4 col-xs-4">
-            <h1>Tell more to us about your insights</h1>
+            <h1 class="possible-solution-h1">Tell more to us about your insights</h1>
             <hr class="about">
-            <div class="col-md-2 new-block" style="background-color:#66CCCC;">
-              Type new one here
-              <div class="new-button">
-                <a href="" class="btn">yes</a>
-              </div>
-            </div>
-            <div class="col-md-6 text">
-              <span><i class="arrow-new fas fa-5x fa-chevron-right"></i></span>
+            <div>
+              <h1 class="possible-solution-h1">Possible Solutions</h1>
+              <span><i class="head-icon"></i></span>
             </div>
           </div>
-          <div style="margin-top: 100px; border-bottom: 1px solid #000;" class="col-md-8 col-xs-8">
+          <div style="height: 225px; margin-top: 100px; border-bottom: 1px solid #000;" class="col-md-8 col-xs-8">
             <hr class="about">
             <div>
               <div class="list-pain-points">
                 <ul>
-                  <li>
-                    <div class="col-md-8">teste</div>
-                    <div class="col-md-4">teste teste teste</div>
+                  <li @click="openModal">
+                    <div class="possible-solution-h1 col-md-8">teste</div>
+                    <div class="possible-solution-h1 col-md-4">teste teste teste</div>
                   </li>
                   <li>
-                    <div class="col-md-8">teste</div>
-                    <div class="col-md-4">teste teste teste</div>
+                    <div class="possible-solution-h1 col-md-8">teste</div>
+                    <div class="possible-solution-h1 col-md-4">teste teste teste</div>
                   </li>
                 </ul>
               </div>
@@ -45,48 +45,18 @@
           </div>
         </div>
       </div>
-      <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
+      <div class="col-md-12 col-xs-12"> 
         <div class="row">
           <div style="text-align:center;">
-            <h1>Solution Constraints</h1>
-            <div style="padding-bottom: 10px;" class="col-md-12 col-xs-12">
+            <h1 class="possible-solution-h1">Solution Constraints</h1>
+            <div style="padding-bottom: 10px; height: 200px; overflow-x: auto;" class="col-md-12 col-xs-12">
               <div class="col-md-3">
-                <div class="blocks" style="background-color:#669999;">
+                <div class="blocks possible-solution-h1" style="background-color:#669999;">
                   Decreasing
                   profits
-                  <div class="buttons">
-                    <a href="" class="btn">yes</a>
-                    <a href="" class="btn">no</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn">yes</a>
-                    <a href="" class="btn">no</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn">yes</a>
-                    <a href="" class="btn">no</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn">yes</a>
-                    <a href="" class="btn">no</a>
+                  <div class="possible-solution-h1 buttons">
+                    <a href="" class="possible-solution-h1 btn yes">yes</a>
+                    <a href="" class="possible-solution-h1 btn">no</a>
                   </div>
                 </div>
               </div>
@@ -95,50 +65,88 @@
         </div>
       </div>
     </div>
+    <b-modal></b-modal>
   </div>
 </template>
 
 <script>
+import BModal from '@/components/BModal'
+
 export default {
-  name: 'PossibleSolution'
+  name: 'PossibleSolution',
+  components: {
+    BModal
+  },
+  methods: {
+    openModal () {
+      // Get the modal
+      var modal = document.getElementById('myModal');
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal 
+      btn.onclick = function() {
+          modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+          modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
-.header-pain-point {
-  height: 140px;
-  padding-top: 115px;
-}
-
 .page-title {
+  color: #fff;
+  font-family: CircularStd-Book;
   background-color: #66cccc;
   height: 100px;
   text-align: center;
 }
 
+.a-page-title {
+  color: #fff;
+}
+
 .page-title > h1 {
+  font-weight: 100;
   margin: 0;
 }
 
-.header-insights {
-  height: 20px;
-  margin-top: 20px;
+.head-icon::before {
+  font-size: 5em;
+  content: url('./../../../assets/img/head.png');
 }
 
 .arrow-new {
   margin-top: 20px;
 }
 
-.pain-points {
-  display: inline;
-  color: #66cccc;
-}
-
 .about {
   border-bottom: 1.3px solid black;
 }
 
+.possible-solution-h1 {
+  font-family: Circularstd-Book;
+  font-weight: 100;
+}
+
 .blocks {
+  color: #fff;
   margin-top: 10px;
   height: 90px;
   border-radius: 4px;
@@ -187,7 +195,7 @@ export default {
 }
 
 .list-pain-points {
-  height: auto;
+  height: 180px;
   width: 100%;
   display: flex;
   overflow: auto;
@@ -208,6 +216,7 @@ export default {
   border-radius: 5px;
   padding: 10px;
   color: #fff;
+  cursor: pointer;
 }
 
 .button-padding {
@@ -230,5 +239,10 @@ export default {
   background-color: #323031;
   color: #66cccc;
 }
+
+.yes {
+  background-color: #1f4238;
+}
+
 </style>
 
