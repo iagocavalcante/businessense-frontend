@@ -1,0 +1,104 @@
+<template>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close"><i class="fas fa-times-circle"></i></span>
+      <h2>Modal Header</h2>
+    </div>
+    <div class="modal-body">
+      <p>Some text in the Modal Body</p>
+      <p>Some other text...</p>
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+      <div class="center">
+        <button class="btn-modal">ADD<br>this solution to yout action plan</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style scoped>
+/* Modal Header */
+.modal-header {
+  font-family: Circularstd-book;
+  font-weight: 100;
+  padding: 2px 16px;
+  background-color: #66cccc;
+  color: #333333;
+  border-bottom: 1px solid #fff;
+  margin: 10px;
+}
+
+/* Modal Body */
+.modal-body {
+  font-family: Circularstd-book;
+  font-weight: 100;
+  padding: 2px 16px;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  margin: 10px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  font-family: Circularstd-book;
+  font-weight: 100;
+  padding: 2px 16px;
+  background-color: #66cccc;
+  color: #333333;
+  margin: 10px;
+}
+
+/* Modal Content */
+.modal-content {
+  border-radius: 5px;
+  position: relative;
+  background-color: #66cccc;
+  margin: auto;
+  padding: 0;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #333333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-modal {
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  background-color: #669999;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+</style>
