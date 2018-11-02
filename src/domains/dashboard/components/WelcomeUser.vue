@@ -8,7 +8,7 @@
               <h1>Welcome <span class="user">User!</span></h1>
               <h2>We need to ask you 2 simple <br> questions to get started</h2>
             </div>
-            <div class="pt-30">
+            <div>
               <div class="col-md-2"></div>
               <div class="col-md-4">
                 <label class="label-left" for="What industry are you in?">What industry are you in?</label>
@@ -34,6 +34,14 @@
                 </div>
               </div>
               <div class="col-md-2"></div>
+              <div class="col-md-12" style="text-align:center;">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <p class="info-text">We use this info to group you with other companies similar to yours. 
+      This way you only get relevant recommendations</p>
+                </div>
+              </div>
+                <div class="col-md-2"></div>
             </div>
           </div>
         </div>
@@ -77,6 +85,12 @@ export default {
 <style scoped>
 h1 {
   font-weight: 600;
+  font-family: CircularStd-Medium;
+}
+
+.info-text {
+  font-size: 18px;
+  color: #fff;
   font-family: CircularStd-Medium;
 }
 
