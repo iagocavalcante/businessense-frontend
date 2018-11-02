@@ -4,7 +4,12 @@
       <div class="row">
         <div class="page-title">
           <div style="text-align: start;" class="container">
-            <a href=""><span><i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i></span>back to dashboard</a>
+            <a class="a-page-title" href="">
+              <span>
+                <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
+              </span>
+              Back to dashboard
+            </a>
           </div>
           <h1>Common Pain Points</h1>
         </div>
@@ -15,7 +20,7 @@
         <div class="row">
           <div class="col-md-4 col-xs-4">
             <h1>Tell more to us about your insights</h1>
-            <h3>Type yout own pain point</h3>
+            <h3 class="pain-points">Type yout own pain point</h3>
             <hr class="about">
             <div class="col-md-2 new-block" style="background-color:#66CCCC;">
               Type new one here
@@ -85,8 +90,14 @@
       <div class="col-md-12 issues">
         <div class="row">
           <div class="col-md-4">
-            <span><i class="fas fa-6x fa-exclamation-triangle"></i></span>
-            <h2 style="display: inline; margin: 0;">Issues identified</h2>
+            <div class="col-md-4" style="
+    margin-top: 35px;">
+              <span><i class="fas fa-6x fa-exclamation-triangle"></i></span>
+            </div>
+            <div class="col-md-3" style="
+    margin-top: 67px;">
+              <h2 style="display: inline; margin: 0;">Issues identified</h2>
+            </div>
           </div>
           <div class="col-md-8 col-xs-8">
             <div class="header-insights">
@@ -100,19 +111,20 @@
             <hr class="about">
             <div class="list-pain-points">
               <ul>
-                <li>
+                <li class="insights-high">
                   <div class="col-md-8">teste</div>
                   <div class="col-md-4">teste teste teste</div>
                 </li>
-                <li>
+                <li class="insights-medium">
+                  <div class="col-md-8">teste</div>
+                  <div class="col-md-4">teste teste teste</div>
+                </li>
+                <li class="insights-low">
                   <div class="col-md-8">teste</div>
                   <div class="col-md-4">teste teste teste</div>
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="pt-10 label-right button-padding">
-            <button class="btn-next-step" @click.prevent="goToRisk">Next Step</button>
           </div>
         </div>
       </div>
@@ -132,18 +144,26 @@ export default {
 </script>
 
 <style scoped>
+
 .header-pain-point {
   height: 140px;
   padding-top: 115px;
 }
 
 .page-title {
+  color: #fff;
+  font-family: CircularStd-Book;
   background-color: #66cccc;
   height: 100px;
   text-align: center;
 }
 
+.a-page-title {
+  color: #fff;
+}
+
 .page-title > h1 {
+  font-weight: 100;
   margin: 0;
 }
 
@@ -158,7 +178,7 @@ export default {
 
 .pain-points {
   display: inline;
-  color: #66cccc;
+  color: #666666;
 }
 
 .about {
@@ -166,6 +186,7 @@ export default {
 }
 
 .blocks {
+  color: #fff;
   margin-top: 10px;
   height: 90px;
   width: 120px;
@@ -236,7 +257,6 @@ export default {
 
 .list-pain-points > ul > li {
   height: 40px;
-  background-color: #1f4238;
   margin: 5px;
   align-items: center;
   align-content: center;
@@ -264,6 +284,22 @@ export default {
   border: 0;
   background-color: #323031;
   color: #66cccc;
+}
+
+.fa-exclamation-triangle {
+  color: #663333 !important;
+}
+
+.insights-high {
+  background-color: #663333;
+}
+
+.insights-medium {
+  background-color: #996666;
+}
+
+.insights-low {
+  background-color: #FF9999;
 }
 </style>
 
