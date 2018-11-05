@@ -1,18 +1,20 @@
 <template>
   <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close"><i class="fas fa-times-circle"></i></span>
-      <h2>Modal Header</h2>
-    </div>
-    <div class="modal-body">
-      <p>Some text in the Modal Body</p>
-      <p>Some other text...</p>
-    </div>
-    <div class="modal-footer">
-      <h3>Modal Footer</h3>
-      <div class="center">
-        <button class="btn-modal">ADD<br>this solution to yout action plan</button>
+  <div class="modal" :class="modalControl ? 'open' : 'close'">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" @click="closeModal"><i class="fas fa-times-circle"></i></span>
+        <h2>Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the Modal Body</p>
+        <p>Some other text...</p>
+      </div>
+      <div class="modal-footer">
+        <h3>Modal Footer</h3>
+        <div class="center">
+          <button class="btn-modal">ADD<br>this solution to yout action plan</button>
+        </div>
       </div>
     </div>
   </div>
@@ -20,11 +22,51 @@
 
 <script>
 export default {
-
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    computed: {
+      modalControl: {
+        get () {
+          return this.show
+        },
+        set () {
+          this.$emit('update:modalControl', this.show)
+        }
+      }
+    },
+    methods: {
+      closeModal () {
+        this.modalControl = false
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.open {
+  display: block;
+}
+
+.close {
+  display: none;
+}
 /* Modal Header */
 .modal-header {
   font-family: Circularstd-book;
