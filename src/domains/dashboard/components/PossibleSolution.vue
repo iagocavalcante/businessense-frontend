@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <b-modal :show="modalControl"></b-modal>
+    <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false"></b-modal>
   </div>
 </template>
 
@@ -78,11 +78,15 @@ export default {
     BModal
   },
   data: () => ({
-    modalControl: false
+    modalControl: false,
+    isLoad: false
   }),
+  created () {
+    this.isLoad = true
+  },
   methods: {
     openModal () {
-      this.modalControl =  true
+      this.modalControl =  !this.modalControl
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <!-- Modal content -->
-  <div class="modal" :class="modalControl ? 'open' : 'close'">
+  <div class="modal" :class="modalControl ? 'open' : 'close-modal'">
     <div class="modal-content">
       <div class="modal-header">
         <span class="close" @click="closeModal"><i class="fas fa-times-circle"></i></span>
@@ -22,25 +22,26 @@
 
 <script>
 export default {
+  name: 'BModal',
   props: {
     show: {
       type: Boolean,
       default: false
-    },
-    computed: {
-      modalControl: {
-        get () {
-          return this.show
-        },
-        set () {
-          this.$emit('update:modalControl', this.show)
-        }
+    }
+  },
+  computed: {
+    modalControl: {
+      get () {
+        return this.show
+      },
+      set (value) {
+        this.$emit('update:show', value)
       }
-    },
-    methods: {
-      closeModal () {
-        this.modalControl = false
-      }
+    }
+  },
+  methods: {
+    closeModal () {
+      this.$emit('close')
     }
   }
 }
@@ -64,7 +65,7 @@ export default {
   display: block;
 }
 
-.close {
+.close-modal {
   display: none;
 }
 /* Modal Header */
