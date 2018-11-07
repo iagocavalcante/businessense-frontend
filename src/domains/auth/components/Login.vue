@@ -10,7 +10,7 @@
               :placeholder="'EMAIL ADRESS OR LOGIN'"
               :name="'login'"
               :classIcon="'fa fa-user'"
-              :value="model">
+              :value="email">
             </b-input>
             <b-input
               :hasIcon="true"
@@ -19,13 +19,13 @@
               :type="'password'"
               :classIcon="'fa fa-lock'"
               :id="'password'"
-              :value="model">
+              :value="password">
             </b-input>
             <div class="forgot-password">
               <a class="forgot-password" href="http://">Forgot your password?</a>
             </div>
             <div class="form-group pt-10">
-              <button class="btn-block btn-login" @click.prevent="login">Log in</button>
+              <button class="btn-block btn-login" @click.prevent="doLogin">Log in</button>
             </div>
             <div class="login-users pt-30">
               <img src="./../../../assets/img/login-users.png" alt="">
@@ -98,17 +98,25 @@
 </template>
 
 <script>
-import BInput from './../../../components/BInput.vue'
+import BInput from '@/components/BInput.vue'
+import { mapActions } from 'vuex'
 export default {
   components: {
     BInput
   },
   data: () => ({
+    email: '',
+    password: '',
     model: ''
   }),
   methods: {
-    login () {
-      this.$router.replace('/dashboard/welcome')
+    ...mapActions('Login', ['login']),
+    doLogin () {
+      const email = this.email 
+      const password = this.password
+      this.login({ email, password })
+        .then(() => this.$router.replace('/dashboard/welcome'))
+        .catch(err => console.log(err))
     }
   }
 }

@@ -9,32 +9,38 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      meta: {
+        free: true
+      },
       component: Home,
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('./domains/auth/components/Login')
+      meta: {
+        free: true
+      },
+      component: () => import(/* webpackChunkName: "login" */ './domains/auth/components/Login')
     },
     {
       path: '/dashboard/welcome',
       name: 'welcome',
-      component: () => import('./domains/dashboard/components/WelcomeUser')
+      component: () => import(/* webpackChunkName: "welcome" */ './domains/dashboard/components/WelcomeUser')
     },
     {
       path: '/dashboard/insights',
       name: 'insigths',
-      component: () => import('./domains/dashboard/components/Insights')
+      component: () => import(/* webpackChunkName: "insights" */ './domains/dashboard/components/Insights')
     },
     {
       path: '/dashboard/risks',
       name: 'risks',
-      component: () => import('./domains/dashboard/components/Risk')
+      component: () => import(/* webpackChunkName: "risks" */ './domains/dashboard/components/Risk')
     },
     {
       path: '/dashboard/possible-solutions',
       name: 'possible-solutions',
-      component: () => import('./domains/dashboard/components/PossibleSolution')
+      component: () => import(/* webpackChunkName: "possible-solutions" */ './domains/dashboard/components/PossibleSolution')
     },
     {
       path: '/about',
