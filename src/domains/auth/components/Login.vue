@@ -10,7 +10,7 @@
               :placeholder="'EMAIL ADRESS OR LOGIN'"
               :name="'login'"
               :classIcon="'fa fa-user'"
-              :value="email">
+              v-model="email">
             </b-input>
             <b-input
               :hasIcon="true"
@@ -19,7 +19,7 @@
               :type="'password'"
               :classIcon="'fa fa-lock'"
               :id="'password'"
-              :value="password">
+              v-model="password">
             </b-input>
             <div class="forgot-password">
               <a class="forgot-password" href="http://">Forgot your password?</a>
@@ -115,7 +115,9 @@ export default {
       const email = this.email 
       const password = this.password
       this.login({ email, password })
-        .then(() => this.$router.replace('/dashboard/welcome'))
+        .then(() => {
+          this.$router.push({name: 'welcome'})
+        })
         .catch(err => console.log(err))
     }
   }

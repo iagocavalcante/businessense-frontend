@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <input :class="className" :type="type" :name="name" :id="id" :value="value" :placeholder="placeholder">
+    <input :class="className" :type="type" :name="name" :id="id" :value="value" @input="input" :placeholder="placeholder">
     <i v-if="hasIcon" class="input-icon" :class="classIcon"></i>
   </div>
 </template>
@@ -45,7 +45,12 @@ export default {
     value: {
       required: true
     }
-  }
+  },
+  methods: {
+    input(event) {
+      this.$emit('input', event.target.value);
+    },
+  },
 }
 </script>
 

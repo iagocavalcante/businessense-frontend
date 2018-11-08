@@ -5,8 +5,8 @@ const login = ({ commit }, user) => {
     commit('auth_request')
     axios({ url: `${process.env.VUE_APP_HOST}/user/login`, data: user, method: 'POST' })
       .then(resp => {
-        const token = resp.data.token
-        const user = resp.data.user
+        const token = resp.data.account.token
+        const user = resp.data.account
         localStorage.setItem('token', token)
         axios.defaults.headers.common['Authorization'] = token
         commit('auth_success', token, user)
