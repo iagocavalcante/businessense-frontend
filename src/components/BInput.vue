@@ -1,6 +1,14 @@
 <template>
-  <div class="form-group">
-    <input :class="className" :type="type" :name="name" :id="id" :value="value" @input="input" :placeholder="placeholder">
+  <div :validator="v" class="form-group">
+    <label v-if="v.$error" :label="label" for="">{{label}}</label>
+    <input
+      :class="[className, { 'hasError': v.$error }]"
+      :type="type"
+      :name="name"
+      :id="id"
+      v-model="model"
+      @input="v.$touch()"
+      :placeholder="placeholder"/>
     <i v-if="hasIcon" class="input-icon" :class="classIcon"></i>
   </div>
 </template>
@@ -44,46 +52,61 @@ export default {
     },
     value: {
       required: true
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    v: {
+      type: Object,
+      required: true
     }
   },
-  methods: {
-    input(event) {
-      this.$emit('input', event.target.value);
-    },
-  },
+  computed: {
+    model: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 
-.form-group {
-  margin-right: 0;
-  margin-left: 0;
-}
+.form-group
+  margin-right 0
+  margin-left 0
 
-.form-group > .input-icon {
-  position: absolute;
-  margin-top: 10px;
-  left: 15px;
-  color:#1ED9BA;
-}
+.form-group
+  .input-icon
+    position absolute
+    margin-top 10px
+    left 15px
+    color #1ED9BA
 
-.text-input {
-  margin-bottom: 10px;
-  height: 40px;
-  border-width: 0;
-  border-style: solid;
-  background-color: #FDF3EA;
-  width: 270px;
-  padding-left: 35px;
-  outline: 0;
-  color: #A39C92;
-}
+.text-input
+  margin-bottom 10px
+  height 40px
+  border-width 0
+  border-style solid
+  background-color #FDF3EA
+  width 270px
+  padding-left 35px
+  outline 0
+  color #A39C92
 
-.text-input:focus {
-  border-color: #323031;
-  border-left-width: 7px;
-  padding-left: 28px;
-}
+.text-input:focus
+  border-color #323031
+  border-left-width 7px
+  padding-left 28px
+  .hasError &
+    border-color red
+
+.hasError label
+  color red
 
 </style>

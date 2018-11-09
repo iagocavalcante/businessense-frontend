@@ -4,13 +4,18 @@
       <div class="row">
         <div class="col-md-5 col-xs-5">
           <div class="login-form">
+            <div class="summary text-red" v-if="$v.loginForm.$error">
+              Form has errors
+            </div>
             <h5 class="welcome">Welcome back</h5>
             <b-input
               :hasIcon="true"
               :placeholder="'EMAIL ADRESS OR LOGIN'"
               :name="'login'"
               :classIcon="'fa fa-user'"
-              v-model="email">
+              :label="'Login or Email'"
+              v-model="loginForm.email"
+              :v="$v.loginForm.email">
             </b-input>
             <b-input
               :hasIcon="true"
@@ -19,7 +24,9 @@
               :type="'password'"
               :classIcon="'fa fa-lock'"
               :id="'password'"
-              v-model="password">
+              :label="'Password'"
+              v-model="loginForm.password"
+              :v="$v.loginForm.password">
             </b-input>
             <div class="forgot-password">
               <a class="forgot-password" href="http://">Forgot your password?</a>
@@ -36,7 +43,7 @@
         <div class="col-md-1 col-xs-1 divider-right"></div>
 
         <div class="col-md-6 col-xs-6">
-          <div class="create-form">
+          <!-- <div class="create-form">
             <h5 class="welcome">You are new here?</h5>
             <b-input
               :placeholder="'EMAIL ADRESS'"
@@ -90,7 +97,7 @@
             <div class="form-group">
               <button class="btn-block btn-login" @click.prevent="">Create</button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -99,19 +106,26 @@
 
 <script>
 import BInput from '@/components/BInput.vue'
+import { required, email } from "vuelidate/lib/validators";
 import { mapActions } from 'vuex'
 export default {
   components: {
     BInput
   },
   data: () => ({
-    email: '',
-    password: '',
+    loginForm: {
+      email: '',
+      password: '',
+    },
     model: ''
   }),
   methods: {
     ...mapActions('Login', ['login']),
     doLogin () {
+      this.$v.loginForm.$touch()
+      // if its still pending or an error is returned do not submit
+      if (this.$v.loginForm.$pending || this.$v.loginForm.$error) return
+      // to form submit after this
       const email = this.email 
       const password = this.password
       this.login({ email, password })
@@ -120,7 +134,13 @@ export default {
         })
         .catch(err => console.log(err))
     }
-  }
+  },
+  validations: {
+    loginForm: {
+      email: { required, email },
+      password: { required }
+    }
+  },
 }
 </script>
 
