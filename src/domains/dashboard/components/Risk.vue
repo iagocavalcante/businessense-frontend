@@ -85,7 +85,7 @@
           </div>
         </div>
       </div>
-      <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
+      <div class="col-md-12 col-xs-12"> 
         <div class="row">
           <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
             <h1 class="risks-h1">Risks Factors</h1>
@@ -101,8 +101,16 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'Risks'
+  name: 'Risks',
+  mounted () {
+    axios.get(`${process.env.VUE_APP_HOST}/issue/6`)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => console.log(error))
+  }
 }
 </script>
 
