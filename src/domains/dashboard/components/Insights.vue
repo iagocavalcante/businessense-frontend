@@ -143,18 +143,23 @@ export default {
       this.getIssueList()
     },
     removePainPointSelected ( id ) {
-      if (this.painPointsSelected.find(painPoint => painPoint !== id.toString())) {
-        alert('This pain point was removed')
+      if (this.painPointsSelected.find(painPoint => painPoint === id.toString())) {
+        this.painPointsSelected = this.painPointsSelected.filter(painPoint => painPoint !== id.toString())
+        this.getIssueList()
         return
       }
-      this.painPointsSelected = this.painPointsSelected.filter(painPoint => painPoint !== id.toString())
-      this.getIssueList()
+      alert('This pain point was removed')
+      return
     },
     getIssueList () {
       const arrayPainPoints = this.painPointsSelected
       axios.post(`${process.env.VUE_APP_HOST}/issuerelevance`, arrayPainPoints)
         .then(response => {
           if ( response.data.status ) {
+            // if (response.data.data.length <= 0) {
+            //   alert('We don\'t find any issues related with this pain point!')
+            //   return
+            // }
             this.issues = [...response.data.data]
             window.localStorage.setItem('pain-points', this.painPointsSelected)
             this.clicked = false
