@@ -4,7 +4,7 @@
       <div class="row">
         <div class="page-title">
           <div style="text-align: start;" class="container">
-            <a class="a-page-title" href="">
+            <a class="a-page-title" href="dashboard/welcome">
               <span>
                 <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
               </span>

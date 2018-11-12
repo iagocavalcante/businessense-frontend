@@ -2,6 +2,22 @@
   <div class="col-xs-12 home">
     <div class="container">
       <div class="row">
+        <div class="col-md-4">
+          <h1>
+            Need help with 
+            your business?
+          </h1>
+          <h1>
+            Solve your management issue. 
+          </h1>
+          <h1>
+            Now.
+          </h1>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="row">
         <div class="col-md-2">
           <h1>
             Need help with 
@@ -11,8 +27,9 @@
       Now.
           </h1>
         </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2"></div>
       </div>
-      <div class="col-md-2"></div>
     </div>
   </div>
 </template>

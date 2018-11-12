@@ -86,7 +86,6 @@ export default {
         .then(response => {
           if ( response.data.status ) {
             this.industries = [...response.data.data]
-            console.log(this.industries)
           }
         })
     },

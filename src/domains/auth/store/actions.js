@@ -10,12 +10,16 @@ const login = ({ commit }, user) => {
         method: 'POST'
       })
       .then(resp => {
-        const token = resp.data.account.token
-        const user = resp.data.account
-        localStorage.setItem('token', token)
-        axios.defaults.headers.common['Authorization'] = token
-        commit('auth_success', token, user)
-        resolve(resp)
+        if (resp.data.status) {
+          const token = resp.data.account.token
+          const user = resp.data.account
+          localStorage.setItem('token', token)
+          axios.defaults.headers.common['Authorization'] = token
+          commit('auth_success', token, user)
+          resolve(resp)
+        } else {
+          reject(new Error(resp.data.message))
+        }
       })
       .catch(err => {
         commit('auth_error')

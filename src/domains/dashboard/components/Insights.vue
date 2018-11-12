@@ -51,7 +51,9 @@
                     <a @click="savePainPointSelected(painPoint.ID)" class="btn">
                       <i class="fas fa-plus-circle"></i>
                     </a>
-                    <a class="btn"><i class="fas fa-minus-circle"></i></a>
+                    <a @click="removePainPointSelected(painPoint.ID)" class="btn">
+                      <i class="fas fa-minus-circle"></i>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -62,12 +64,10 @@
       <div class="col-md-12 issues">
         <div class="row">
           <div class="col-md-4">
-            <div class="col-md-4" style="
-    margin-top: 35px;">
+            <div class="col-md-4" style="margin-top: 35px;">
               <span><i class="fas fa-6x fa-exclamation-triangle"></i></span>
             </div>
-            <div class="col-md-3" style="
-    margin-top: 67px;">
+            <div class="col-md-3" style="margin-top: 67px;">
               <h2 style="display: inline; margin: 0;">Issues identified</h2>
             </div>
           </div>
@@ -120,7 +120,6 @@ export default {
         .then(response => {
           if ( response.data.status ) {
             this.painPoints = [...response.data.data]
-            console.log(this.industries)
           }
         })
     },
@@ -132,7 +131,6 @@ export default {
             this.searchPainPoints()
             this.newPainPoint = ''
             this.clicked = false
-            console.log(this.industries)
           }
         })
     },
@@ -142,6 +140,14 @@ export default {
         return
       }
       this.painPointsSelected.push(id.toString())
+      this.getIssueList()
+    },
+    removePainPointSelected ( id ) {
+      if (this.painPointsSelected.find(painPoint => painPoint !== id.toString())) {
+        alert('This pain point was removed')
+        return
+      }
+      this.painPointsSelected = this.painPointsSelected.filter(painPoint => painPoint !== id.toString())
       this.getIssueList()
     },
     getIssueList () {
