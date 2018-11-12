@@ -90,9 +90,11 @@
 import BInput from '@/components/BInput.vue'
 import { email, required } from 'vuelidate/lib/validators'
 import axios from 'axios'
+import { notification } from '@/support/utils/notification-mixin'
 
 export default {
   name: 'CreateUser',
+  mixins: [notification],
   components: {
     BInput
   },
@@ -118,11 +120,13 @@ export default {
       axios.post(`${process.env.VUE_APP_HOST}/user/new`, { email, password, firstname, lastname})
         .then((response) => {
           if(response.data.status) {
-            console.log('criado com sucesso')
+            this.successMsg('User Created', `Please log in to see your dashboard`)
             this.createForm = Object.assign({}, createForm)
+          } else {
+            throw new Error(resp.data.message)
           }
         })
-        .catch(err => console.log(err))
+        .catch(err => this.errorMsg('Create User Error', `${err}`))
     }
   },
   validations: {

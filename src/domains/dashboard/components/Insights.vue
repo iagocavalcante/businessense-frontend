@@ -98,9 +98,11 @@
 
 <script>
 import axios from 'axios'
+import { notification } from '@/support/utils/notification-mixin'
 
 export default {
   name: 'Insights',
+  mixins: [notification],
   data: () => ({
     painPoints: [],
     newPainPoint: '',
@@ -120,8 +122,11 @@ export default {
         .then(response => {
           if ( response.data.status ) {
             this.painPoints = [...response.data.data]
+          } else {
+            throw new Error(`${response.data.message}`)
           }
         })
+        .catch(error => this.error('Pain Points Error', `${error}`))
     },
     createPainPoints () {
       const name = this.newPainPoint
@@ -131,12 +136,16 @@ export default {
             this.searchPainPoints()
             this.newPainPoint = ''
             this.clicked = false
+            this.successMsg('Pain Point', 'Pain point created')
+          } else {
+            throw new Error(`${response.data.message}`)
           }
         })
+        .catch(error => this.error('Pain Points Error', `${error}`))
     },
     savePainPointSelected ( id ) {
       if (this.painPointsSelected.find(paintPoint => paintPoint === id.toString())) {
-        alert('This pain point was selected')
+        this.infoMsg('Pain Point', 'This pain point was selected')
         return
       }
       this.painPointsSelected.push(id.toString())
@@ -148,7 +157,7 @@ export default {
         this.getIssueList()
         return
       }
-      alert('This pain point was removed')
+      this.infoMsg('Pain Point','This pain point was removed')
       return
     },
     getIssueList () {
@@ -156,15 +165,14 @@ export default {
       axios.post(`${process.env.VUE_APP_HOST}/issuerelevance`, arrayPainPoints)
         .then(response => {
           if ( response.data.status ) {
-            // if (response.data.data.length <= 0) {
-            //   alert('We don\'t find any issues related with this pain point!')
-            //   return
-            // }
             this.issues = [...response.data.data]
             window.localStorage.setItem('pain-points', this.painPointsSelected)
             this.clicked = false
+          } else {
+            throw new Error(`${response.data.message}`)
           }
         })
+        .catch(error => this.error('Pain Points Error', `${error}`))
     },
     getAccuracy( value ) {
       if (value > 0 && value <= 0.333 ) {

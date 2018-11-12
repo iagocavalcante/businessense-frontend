@@ -58,27 +58,12 @@ export default {
   name: 'Welcome',
   data: () => ({
     industry: '',
-    industries: [
-      {
-        label: 'Teste 1',
-        value: 1
-      },
-      {
-        label: 'Teste 2',
-        value: 2
-      },
-      {
-        label: 'Teste 3',
-        value: 3
-      },
-      {
-        label: 'Teste 4',
-        value: 4
-      },
-    ]
+    industries: []
   }),
   mounted() {
-    this.searchIndustries()
+    setTimeout(() => {
+      this.searchIndustries()
+    }, 2000)
   },
   methods: {
     searchIndustries () {

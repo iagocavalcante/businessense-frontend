@@ -48,9 +48,11 @@
 import BInput from '@/components/BInput.vue'
 import { mapActions } from 'vuex'
 import { email, required } from 'vuelidate/lib/validators'
+import { notification } from '@/support/utils/notification-mixin'
 
 export default {
   name: 'Login',
+  mixins: [notification],
   components: {
     BInput
   },
@@ -60,6 +62,9 @@ export default {
       password: '',
     }
   }),
+  mounted () {
+    console.log(this.errorMsg)
+  },
   methods: {
     ...mapActions('Login', ['login']),
     doLogin () {
@@ -73,7 +78,7 @@ export default {
         .then(() => {
           this.$router.push({name: 'welcome'})
         })
-        .catch(err => console.log(err))
+        .catch(err => this.errorMsg('Login Error', `${err}`))
     }
   },
   validations: {
