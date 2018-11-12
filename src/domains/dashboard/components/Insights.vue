@@ -23,9 +23,10 @@
             <h3 class="pain-points">Type yout own pain point</h3>
             <hr class="about">
             <div class="col-md-2 new-block" style="background-color:#66CCCC;">
-              Type new one here
+              <span v-show="!clicked" @click="changeInput()">Type new one here</span>
+              <input ref="newPain" class="input-pain-point" v-show="clicked" type="text" v-model="newPainPoint">
               <div class="new-button">
-                <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
+                <a @click="createPainPoints()" class="btn"><i class="fas fa-plus-circle"></i></a>
               </div>
             </div>
             <div class="col-md-6 text">
@@ -43,43 +44,14 @@
             </div>
             <hr class="about">
             <div>
-              <div class="col-md-2 margin-blocks">
+              <div class="col-md-2 margin-blocks" :key="painPoint.ID" v-for="painPoint in painPoints">
                 <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
+                  {{painPoint.name}}
                   <div class="buttons">
-                    <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
-                    <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 margin-blocks">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
-                    <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 margin-blocks">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
-                    <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 margin-blocks">
-                <div class="blocks" style="background-color:#669999;">
-                  Decreasing
-                  profits
-                  <div class="buttons">
-                    <a href="" class="btn"><i class="fas fa-plus-circle"></i></a>
-                    <a href="" class="btn"><i class="fas fa-minus-circle"></i></a>
+                    <a @click="savePainPointSelected(painPoint.ID)" class="btn">
+                      <i class="fas fa-plus-circle"></i>
+                    </a>
+                    <a class="btn"><i class="fas fa-minus-circle"></i></a>
                   </div>
                 </div>
               </div>
@@ -111,17 +83,9 @@
             <hr class="about">
             <div class="list-pain-points">
               <ul>
-                <li class="insights-high">
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li class="insights-medium">
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
-                </li>
-                <li class="insights-low">
-                  <div class="col-md-8">teste</div>
-                  <div class="col-md-4">teste teste teste</div>
+                <li v-if="issues.length" :class="getStyle(issue.Relevance)" :key="issue.IssueID" v-for="issue in issues">
+                  <div class="col-md-8">{{issue.Name}}</div>
+                  <div class="col-md-4">accuracy: {{getAccuracy(issue.Relevance)}}</div>
                 </li>
               </ul>
             </div>
@@ -133,17 +97,104 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: "Insights",
+  name: 'Insights',
+  data: () => ({
+    painPoints: [],
+    newPainPoint: '',
+    clicked: false,
+    painPointsSelected: [],
+    issues: []
+  }),
+  mounted() {
+    this.searchPainPoints()
+  },
   methods: {
     goToRisk () {
       this.$router.push('/dashboard/risks')
+    },
+    searchPainPoints () {
+      axios.get(`${process.env.VUE_APP_HOST}/painpoint/search`)
+        .then(response => {
+          if ( response.data.status ) {
+            this.painPoints = [...response.data.data]
+            console.log(this.industries)
+          }
+        })
+    },
+    createPainPoints () {
+      const name = this.newPainPoint
+      axios.post(`${process.env.VUE_APP_HOST}/painpoint/new`, { name })
+        .then(response => {
+          if ( response.data.status ) {
+            this.searchPainPoints()
+            this.newPainPoint = ''
+            this.clicked = false
+            console.log(this.industries)
+          }
+        })
+    },
+    savePainPointSelected ( id ) {
+      if (this.painPointsSelected.find(paintPoint => paintPoint === id.toString())) {
+        alert('This pain point was selected')
+        return
+      }
+      this.painPointsSelected.push(id.toString())
+      this.getIssueList()
+    },
+    getIssueList () {
+      const arrayPainPoints = this.painPointsSelected
+      axios.post(`${process.env.VUE_APP_HOST}/issuerelevance`, arrayPainPoints)
+        .then(response => {
+          if ( response.data.status ) {
+            this.issues = [...response.data.data]
+            window.localStorage.setItem('pain-points', this.painPointsSelected)
+            this.clicked = false
+          }
+        })
+    },
+    getAccuracy( value ) {
+      if (value > 0 && value <= 0.333 ) {
+        return 'Low'
+      } else if (value > 0.333 && value <= 0.666) {
+        return 'Medium'
+      } else {
+        return 'High'
+      }
+    },
+    getStyle( value ) {
+      if (value > 0 && value <= 0.333 ) {
+        return 'insights-low'
+      } else if (value > 0.333 && value <= 0.666) {
+        return 'insights-medium'
+      } else {
+        return 'insights-high'
+      }
+    },
+    changeInput () {
+      this.clicked = !this.clicked
+      this.$refs.newPain.autofocus = true
     }
   }
 }
 </script>
 
 <style scoped>
+.input-pain-point {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  width: 95px;
+  border: 0;
+  background-color: transparent;
+}
+
+.input-pain-point:focus-within {
+  border: 0;
+  border-color: #323031;
+}
 
 .header-pain-point {
   height: 140px;
@@ -232,6 +283,7 @@ export default {
   padding: 0.15em;
   font-size: 18px;
   color: #fff;
+  cursor: pointer;
 }
 
 .pull-right {
@@ -302,4 +354,3 @@ export default {
   background-color: #FF9999;
 }
 </style>
-

@@ -20,7 +20,7 @@ export default new Router({
       meta: {
         free: true
       },
-      component: () => import(/* webpackChunkName: "login" */ './domains/auth/components/Login')
+      component: () => import(/* webpackChunkName: "login" */ './domains/auth/ContainerAuth')
     },
     {
       path: '/dashboard/welcome',

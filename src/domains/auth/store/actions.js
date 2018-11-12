@@ -3,7 +3,12 @@ import axios from 'axios'
 const login = ({ commit }, user) => {
   return new Promise((resolve, reject) => {
     commit('auth_request')
-    axios({ url: `${process.env.VUE_APP_HOST}/user/login`, data: user, method: 'POST' })
+    axios(
+      {
+        url: `${process.env.VUE_APP_HOST}/user/login`,
+        data: user,
+        method: 'POST'
+      })
       .then(resp => {
         const token = resp.data.account.token
         const user = resp.data.account

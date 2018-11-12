@@ -4,7 +4,7 @@
       <nav class="container navbar" id="nav">
         <div class="row">
           <div class="col-md-6">
-            <a href="http://">
+            <a href="/">
               <img class="logo" src="./../assets/img/bsense_rgb_verde.png" alt="">
             </a>
           </div>
@@ -24,7 +24,15 @@
 
 <script>
 export default {
-
+  name: 'BNavbar',
+  mounted() {
+    this.checkRoute()
+  },
+  methods: {
+    checkRoute () {
+      console.log(this.$router.currentRoute)
+    }
+  }
 }
 </script>
 

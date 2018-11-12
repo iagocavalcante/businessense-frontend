@@ -4,20 +4,9 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import axios from 'axios'
-import Vuelidate from "vuelidate"
-import VuelidateErrorExtractor, { templates } from 'vuelidate-error-extractor'
+import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
-Vue.use(VuelidateErrorExtractor, {
-  i18n: false,
-  // Define common validation messages.
-  messages: {
-    required: '{attribute} is required!',
-    email: '{attribute} is not a valid Email address.',
-  }
-})
-
-Vue.component('BInput', templates.singleErrorExtractor.bootstrap4);
 
 Vue.prototype.$http = axios;
 const token = localStorage.getItem('token')

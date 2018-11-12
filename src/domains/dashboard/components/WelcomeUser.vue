@@ -15,8 +15,8 @@
                 <div class="icon">
                   <img class="industry" src="./../../../assets/img/Icones-06.png" alt="">
                 </div>
-                <select class="form-industry mt-10" name="" id="">
-                  <option value="" :key="industry.value" v-for="industry in industries">{{industry.label}}</option>
+                <select class="form-industry mt-10" v-model="industry" name="industry" id="industry">
+                  <option value="" :key="industry.ID" v-for="industry in industries">{{industry.name}}</option>
                 </select>
                 <button class="plus-button" @click.prevent="">+</button>
               </div>
@@ -52,9 +52,12 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Welcome',
   data: () => ({
+    industry: '',
     industries: [
       {
         label: 'Teste 1',
@@ -74,7 +77,19 @@ export default {
       },
     ]
   }),
+  mounted() {
+    this.searchIndustries()
+  },
   methods: {
+    searchIndustries () {
+      axios.get(`${process.env.VUE_APP_HOST}/industry/search`)
+        .then(response => {
+          if ( response.data.status ) {
+            this.industries = [...response.data.data]
+            console.log(this.industries)
+          }
+        })
+    },
     goToInsights () {
       this.$router.push('/dashboard/insights')
     }
