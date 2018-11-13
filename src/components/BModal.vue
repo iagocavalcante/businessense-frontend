@@ -13,7 +13,7 @@
       <div class="modal-footer">
         <h3>Modal Footer</h3>
         <div class="center">
-          <button class="btn-modal">ADD<br>this solution to yout action plan</button>
+          <button class="btn-modal">ADD<br>this solution to your action plan</button>
         </div>
       </div>
     </div>

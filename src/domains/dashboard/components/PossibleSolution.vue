@@ -3,19 +3,19 @@
     <div class="col-md-12 col-xs-12"> 
       <div class="row">
         <div class="page-title">
-          <div style="text-align: start;" class="container">
+          <!-- <div style="text-align: start;" class="container">
             <a class="a-page-title" href="dashboard/welcome">
               <span>
                 <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
               </span>
               Back to dashboard
             </a>
-          </div>
-          <h1>Possible Solutions</h1>
+          </div> -->
+          <h1 style="padding-top: 30px;">Possible Solutions</h1>
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container" v-if="isLoad">
       <div class="col-md-12 col-xs-12"> 
         <div class="row">
           <div style="border-bottom: 1px solid #000; padding-bottom: 24px;" class="col-md-4 col-xs-4">
@@ -31,14 +31,11 @@
             <div>
               <div class="list-pain-points">
                 <ul>
-                  <li @click="openModal">
-                    <div class="possible-solution-h1 col-md-8">teste</div>
-                    <div class="possible-solution-h1 col-md-4">teste teste teste</div>
+                  <li @click="openModal" :key="solution.ID" v-for="solution in possibleSolution.solutions">
+                    <div class="possible-solution-h1 col-md-8">{{solution.name}}</div>
+                    <div class="possible-solution-h1 col-md-4">{{solution.description}}</div>
                   </li>
-                  <li>
-                    <div class="possible-solution-h1 col-md-8">teste</div>
-                    <div class="possible-solution-h1 col-md-4">teste teste teste</div>
-                  </li>
+                  <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false"></b-modal>
                 </ul>
               </div>
             </div>
@@ -50,10 +47,9 @@
           <div style="text-align:center;">
             <h1 class="possible-solution-h1">Solution Constraints</h1>
             <div style="padding-bottom: 10px; height: 200px; overflow-x: auto;" class="col-md-12 col-xs-12">
-              <div class="col-md-3">
+              <div class="col-md-3" :key="constraint.ID" v-for="constraint in possibleSolution.constraints">
                 <div class="blocks possible-solution-h1" style="background-color:#669999;">
-                  Decreasing
-                  profits
+                  {{constraint.Constraint.description}}
                   <div class="possible-solution-h1 buttons">
                     <a href="" class="possible-solution-h1 btn yes">yes</a>
                     <a href="" class="possible-solution-h1 btn">no</a>
@@ -65,24 +61,39 @@
         </div>
       </div>
     </div>
-    <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false"></b-modal>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import BModal from '@/components/BModal'
+import { notification } from '@/support/utils/notification-mixin'
 
 export default {
   name: 'PossibleSolution',
+  mixins: [notification],
   components: {
     BModal
   },
   data: () => ({
     modalControl: false,
-    isLoad: false
+    isLoad: false,
+    issueId: '',
+    possibleSolution: []
   }),
-  created () {
-    this.isLoad = true
+  mounted () {
+    this.issueId = window.sessionStorage.getItem('issueId')
+    axios.get(`${process.env.VUE_APP_HOST}/solution/issue/${this.issueId}`)
+      .then(response => {
+        if ( response.data.status ) {
+            console.log(response.data)
+            this.isLoad = true
+            this.possibleSolution = {...response.data}
+          } else {
+            throw new Error(`${response.data.message}`)
+          }
+        })
+        .catch(error => this.errorMsg('Solution', `${error}`))
   },
   methods: {
     openModal () {

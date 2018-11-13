@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="container" style="padding-top: 30px;">
+    <div class="container" style="padding-top: 30px;" v-if="isLoad">
       <div style="border-bottom: 1px solid black; margint-top: 30px;" class="col-md-12 col-xs-12"> 
         <div class="row">
           <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
@@ -29,8 +29,7 @@
             </div>
           </div>
           <div style="padding: 10px;" class="col-md-8 col-xs-8">
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
+            <p class="sugestions">{{risk.description}}</p>
           </div>
         </div>
       </div>
@@ -43,8 +42,7 @@
             </div>
           </div>
           <div style="padding: 10px;" class="col-md-8 col-xs-8">
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
+            <p class="sugestions">{{risk.stats}}</p>
           </div>
         </div>
       </div>
@@ -91,25 +89,44 @@
             <h1 class="risks-h1">Risks Factors</h1>
           </div>
           <div style="padding: 10px;" class="col-md-8 col-xs-8">
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
-            <p class="sugestions">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta repudiandae sint alias inventore ex similique rem, dignissimos minima recusandae, quae eaque cum nesciunt nobis repellat cumque asperiores vel hic?</p>
+            <p class="sugestions">{{risk.riskfactors}}</p>
           </div>
         </div>
       </div>
     </div>
+    <possible-solution/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { notification } from '@/support/utils/notification-mixin'
+import PossibleSolution from '@/domains/dashboard/components/PossibleSolution'
+
 export default {
   name: 'Risks',
+  mixins: [notification],
+  components: {
+    PossibleSolution
+  },
+  data: () => ({
+    risk: {},
+    isLoad: false,
+    issueId: ''
+  }),
   mounted () {
-    axios.get(`${process.env.VUE_APP_HOST}/issue/6`)
+    this.issueId = window.sessionStorage.getItem('issueId')
+    axios.get(`${process.env.VUE_APP_HOST}/issue/${this.issueId}`)
       .then(response => {
-        console.log(response.data)
-      })
-      .catch(error => console.log(error))
+        if ( response.data.status ) {
+            console.log(response.data.data)
+            this.isLoad = true
+            this.risk = {...response.data.data}
+          } else {
+            throw new Error(`${response.data.message}`)
+          }
+        })
+        .catch(error => this.errorMsg('Risk', `${error}`))
   }
 }
 </script>

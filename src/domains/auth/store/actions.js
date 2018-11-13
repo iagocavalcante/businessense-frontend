@@ -13,7 +13,7 @@ const login = ({ commit }, user) => {
         if (resp.data.status) {
           const token = resp.data.account.token
           const user = resp.data.account
-          localStorage.setItem('token', token)
+          window.localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = token
           commit('auth_success', token, user)
           resolve(resp)

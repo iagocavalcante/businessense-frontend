@@ -61,6 +61,7 @@ export default {
     industries: []
   }),
   mounted() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage.getItem('token')}`
     setTimeout(() => {
       this.searchIndustries()
     }, 2000)

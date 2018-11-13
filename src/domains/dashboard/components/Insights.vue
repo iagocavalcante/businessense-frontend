@@ -83,7 +83,7 @@
             <hr class="about">
             <div class="list-pain-points">
               <ul>
-                <li v-if="issues.length" :class="getStyle(issue.Relevance)" :key="issue.IssueID" v-for="issue in issues">
+                <li style="cursor: pointer;" @click="goToRisk(issue.IssueID)" v-if="issues.length" :class="getStyle(issue.Relevance)" :key="issue.IssueID" v-for="issue in issues">
                   <div class="col-md-8">{{issue.Name}}</div>
                   <div class="col-md-4">accuracy: {{getAccuracy(issue.Relevance)}}</div>
                 </li>
@@ -114,7 +114,8 @@ export default {
     this.searchPainPoints()
   },
   methods: {
-    goToRisk () {
+    goToRisk ( id ) {
+      window.sessionStorage.setItem('issueId', id)
       this.$router.push('/dashboard/risks')
     },
     searchPainPoints () {
@@ -126,7 +127,7 @@ export default {
             throw new Error(`${response.data.message}`)
           }
         })
-        .catch(error => this.error('Pain Points Error', `${error}`))
+        .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
     createPainPoints () {
       const name = this.newPainPoint
@@ -141,7 +142,7 @@ export default {
             throw new Error(`${response.data.message}`)
           }
         })
-        .catch(error => this.error('Pain Points Error', `${error}`))
+        .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
     savePainPointSelected ( id ) {
       if (this.painPointsSelected.find(paintPoint => paintPoint === id.toString())) {
@@ -162,7 +163,7 @@ export default {
     },
     getIssueList () {
       const arrayPainPoints = this.painPointsSelected
-      axios.post(`${process.env.VUE_APP_HOST}/issuerelevance`, arrayPainPoints)
+      axios.post(`${process.env.VUE_APP_HOST}/issue/relevance`, arrayPainPoints)
         .then(response => {
           if ( response.data.status ) {
             this.issues = [...response.data.data]
@@ -172,7 +173,7 @@ export default {
             throw new Error(`${response.data.message}`)
           }
         })
-        .catch(error => this.error('Pain Points Error', `${error}`))
+        .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
     getAccuracy( value ) {
       if (value > 0 && value <= 0.333 ) {
