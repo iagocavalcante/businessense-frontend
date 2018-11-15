@@ -30,7 +30,11 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div style="text-align: center;" class="col-md-8">
-        <h1>teste</h1>
+        <h1>What is businessense</h1>
+        <h3>Businessense is a platform for small and medium business owners. 
+We diagnose your major opportunities, get you spot-on, 
+actionable recommendations and even provide you with 
+third party providers, when it makes sense. </h3>
       </div>
       <div class="col-md-2"></div>
     </div>
