@@ -26,16 +26,27 @@
               <span><i class="head-icon"></i></span>
             </div>
           </div>
-          <div style="height: 225px; margin-top: 100px; border-bottom: 1px solid #000;" class="col-md-8 col-xs-8">
+          <div style="height: 225px; margin-top: 99px; border-bottom: 1px solid #000;" class="col-md-8 col-xs-8">
             <hr class="about">
             <div>
               <div class="list-pain-points">
                 <ul>
-                  <li @click="openModal" :key="solution.ID" v-for="solution in possibleSolution.solutions">
+                  <li @click="openModal()" :class="getStyle(calculate(solution.ID))" :key="solution.ID" v-for="solution in possibleSolution.solutions">
                     <div class="possible-solution-h1 col-md-8">{{solution.name}}</div>
-                    <div class="possible-solution-h1 col-md-4">{{solution.description}}</div>
+                    <div class="possible-solution-h1 col-md-4">accuracy: {{getAccuracy(calculate(solution.ID))}}</div>
+                    <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false">
+                      <template slot="modal-header">
+                        <h1>{{solution.name}}</h1>
+                      </template>
+                      <template slot="modal-body">
+                        <p>{{solution.description}}</p>
+                        <p>{{solution.description}}</p>
+                      </template>
+                      <template slot="modal-footer">
+                        <p>{{solution.description}}</p>
+                      </template>
+                    </b-modal>
                   </li>
-                  <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false"></b-modal>
                 </ul>
               </div>
             </div>
@@ -49,10 +60,10 @@
             <div style="padding-bottom: 10px; height: 200px; overflow-x: auto;" class="col-md-12 col-xs-12">
               <div class="col-md-3" :key="constraint.ID" v-for="constraint in possibleSolution.constraints">
                 <div class="blocks possible-solution-h1" style="background-color:#669999;">
-                  {{constraint.Constraint.description}}
+                  {{constraint.Constraint.name}}
                   <div class="possible-solution-h1 buttons">
-                    <a href="" class="possible-solution-h1 btn yes">yes</a>
-                    <a href="" class="possible-solution-h1 btn">no</a>
+                    <a class="possible-solution-h1 btn yes" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">yes</a>
+                    <a class="possible-solution-h1 btn" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">no</a>
                   </div>
                 </div>
               </div>
@@ -79,7 +90,8 @@ export default {
     modalControl: false,
     isLoad: false,
     issueId: '',
-    possibleSolution: []
+    possibleSolution: [],
+    relevance: 0
   }),
   mounted () {
     this.issueId = window.sessionStorage.getItem('issueId')
@@ -98,6 +110,30 @@ export default {
   methods: {
     openModal () {
       this.modalControl =  !this.modalControl
+    },
+    calculateSolution ( id, value ) {
+      this.relevance = this.possibleSolution.constraints.find( constraint => id === constraint.SolutionID).Weight
+    },
+    calculate ( id ) {
+      return this.possibleSolution.constraints.find( constraint => id === constraint.SolutionID).Weight
+    },
+    getAccuracy( value ) {
+      if (value > 0 && value <= 0.333 ) {
+        return 'Low'
+      } else if (value > 0.333 && value <= 0.666) {
+        return 'Medium'
+      } else {
+        return 'High'
+      }
+    },
+    getStyle( value ) {
+      if (value > 0 && value <= 0.333 ) {
+        return 'solution-low'
+      } else if (value > 0.333 && value <= 0.666) {
+        return 'solution-medium'
+      } else {
+        return 'solution-high'
+      }
     }
   }
 }
@@ -172,6 +208,8 @@ export default {
 }
 
 .btn {
+  cursor: pointer;
+  text-decoration: none;
   padding: 0.15em;
   font-size: 18px;
   color: #fff;
@@ -203,7 +241,6 @@ export default {
 
 .list-pain-points > ul > li {
   height: 40px;
-  background-color: #1f4238;
   margin: 5px;
   align-items: center;
   align-content: center;
@@ -236,6 +273,18 @@ export default {
 
 .yes {
   background-color: #1f4238;
+}
+
+.solution-high {
+  background-color: #1f4238;
+}
+
+.solution-medium {
+  background-color: #669999;
+}
+
+.solution-low {
+  background-color: #66cccc;
 }
 
 </style>

@@ -52,6 +52,9 @@
       <li v-if="!$v.createForm.createPassword.required">
         This field is required.
       </li>
+      <li v-if="!$v.createForm.minLength">
+        This field must have 6 words or more.
+      </li>
     </ul>
     <b-input
       :hasIcon="true"
@@ -67,6 +70,9 @@
       <li v-if="!$v.createForm.confirmPassword.required">
         This field is required.
       </li>
+      <li v-if="!$v.createForm.confirmPassword.sameAsPassword">
+        Different password
+      </li>
     </ul>
     <div class="col-md-12">
       <input type="checkbox" class="form-checkbox" name="agree" id="">
@@ -81,14 +87,19 @@
       </span>
     </div>
     <div class="form-group">
-      <button class="btn-block btn-login" @click.prevent="createUser()">Create</button>
+      <button class="btn-block btn-login" @click.prevent="createUser()">
+        <span v-if="!loading">
+          Create
+        </span>
+        <i v-if="loading" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size:24px; color: white;"></i>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import BInput from '@/components/BInput.vue'
-import { email, required } from 'vuelidate/lib/validators'
+import { email, required, minLength, sameAs } from 'vuelidate/lib/validators'
 import axios from 'axios'
 import { notification } from '@/support/utils/notification-mixin'
 
@@ -99,6 +110,7 @@ export default {
     BInput
   },
   data: () => ({
+    loading: false,
     createForm: {
       email: '',
       firstName: '',
@@ -109,6 +121,7 @@ export default {
   }),
   methods: {
     createUser () {
+      this.loading = true
       this.$v.createForm.$touch()
       // if its still pending or an error is returned do not submit
       if (this.$v.createForm.$pending || this.$v.createForm.$error) return
@@ -119,14 +132,26 @@ export default {
       const lastname = this.createForm.lastName
       axios.post(`${process.env.VUE_APP_HOST}/user/new`, { email, password, firstname, lastname})
         .then((response) => {
+          this.loading = false
           if(response.data.status) {
             this.successMsg('User Created', `Please log in to see your dashboard`)
-            this.createForm = Object.assign({}, createForm)
+            this.resetData()
+            this.$v.$reset()
           } else {
-            throw new Error(resp.data.message)
+            throw new Error(response.data.message)
           }
         })
-        .catch(err => this.errorMsg('Create User Error', `${err}`))
+        .catch(err => {
+          this.loading = true
+          this.errorMsg('Create User Error', `${err}`)
+        })
+    },
+    resetData () {
+      this.createForm.email = ''
+      this.createForm.firstName = '' 
+      this.createForm.lastName = '' 
+      this.createForm.createPassword = '' 
+      this.createForm.confirmPassword = ''
     }
   },
   validations: {
@@ -143,9 +168,11 @@ export default {
       },
       createPassword: {
         required,
+        minLength: minLength(6)
       },
       confirmPassword: {
         required,
+        sameAsPassword: sameAs('createPassword')
       }
     }
   }

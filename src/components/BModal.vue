@@ -4,15 +4,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <span class="close" @click="closeModal"><i class="fas fa-times-circle"></i></span>
-        <h2>Modal Header</h2>
+        <slot name="modal-header"></slot>
       </div>
       <div class="modal-body">
-        <p>Some text in the Modal Body</p>
-        <p>Some other text...</p>
+        <slot name="modal-body"></slot>
       </div>
       <div class="modal-footer">
-        <h3>Modal Footer</h3>
-        <div class="center">
+        <slot name="modal-footer"></slot>
+        <div class="center" v-if="hasDefaultButton">
           <button class="btn-modal">ADD<br>this solution to your action plan</button>
         </div>
       </div>
@@ -27,6 +26,10 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    hasDefaultButton: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

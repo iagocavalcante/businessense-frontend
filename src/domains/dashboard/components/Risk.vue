@@ -119,7 +119,6 @@ export default {
     axios.get(`${process.env.VUE_APP_HOST}/issue/${this.issueId}`)
       .then(response => {
         if ( response.data.status ) {
-            console.log(response.data.data)
             this.isLoad = true
             this.risk = {...response.data.data}
           } else {

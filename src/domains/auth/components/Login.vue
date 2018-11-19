@@ -36,7 +36,12 @@
       <a class="forgot-password" href="http://">Forgot your password?</a>
     </div>
     <div class="form-group pt-10">
-      <button class="btn-block btn-login" @click.prevent="doLogin()">Log in</button>
+      <button class="btn-block btn-login" @click.prevent="doLogin()">
+        <span v-if="!loading">
+          Log in
+        </span>
+        <i v-if="loading" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size:24px; color: white;"></i>
+      </button>
     </div>
     <div class="login-users pt-30">
       <img src="./../../../assets/img/login-users.png" alt="">
@@ -57,17 +62,16 @@ export default {
     BInput
   },
   data: () => ({
+    loading: false,
     loginForm: {
       email: '',
       password: '',
     }
   }),
-  mounted () {
-    console.log(this.errorMsg)
-  },
   methods: {
     ...mapActions('Login', ['login']),
     doLogin () {
+      this.loading = true
       this.$v.loginForm.$touch()
       // if its still pending or an error is returned do not submit
       if (this.$v.loginForm.$pending || this.$v.loginForm.$error) return
@@ -76,9 +80,13 @@ export default {
       const password = this.loginForm.password
       this.login({ email, password })
         .then(() => {
+          this.loading = false
           this.$router.push({name: 'welcome'})
         })
-        .catch(err => this.errorMsg('Login Error', `${err}`))
+        .catch(err => {
+          this.loading = false
+          this.errorMsg('Login Error', `${err}`)
+        })
     }
   },
   validations: {
