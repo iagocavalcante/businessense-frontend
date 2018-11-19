@@ -124,7 +124,10 @@ export default {
       this.loading = true
       this.$v.createForm.$touch()
       // if its still pending or an error is returned do not submit
-      if (this.$v.createForm.$pending || this.$v.createForm.$error) return
+      if (this.$v.createForm.$pending || this.$v.createForm.$error) {
+        this.loading = false
+        return
+      } 
       
       const email = this.createForm.email 
       const password = this.createForm.createPassword
@@ -133,10 +136,17 @@ export default {
       axios.post(`${process.env.VUE_APP_HOST}/user/new`, { email, password, firstname, lastname})
         .then((response) => {
           this.loading = false
+          console.log(response.data)
           if(response.data.status) {
-            this.successMsg('User Created', `Please log in to see your dashboard`)
+            this.successMsg('User Created', `Now you can see your dashboard`)
             this.resetData()
             this.$v.$reset()
+            const token = response.data.account.token
+            const user = response.data.account
+            window.localStorage.setItem('token', token)
+            window.localStorage.setItem('accountId', user.ID)
+            axios.defaults.headers.common['Authorization'] = token
+            this.$router.push({name: 'welcome'})
           } else {
             throw new Error(response.data.message)
           }

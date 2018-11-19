@@ -18,33 +18,33 @@
     <div class="container">
       <div class="col-md-12 col-xs-12"> 
         <div class="row">
-          <div class="col-md-4 col-xs-4">
+          <div class="col-md-4 col-xs-12">
             <h1>Tell more to us about your insights</h1>
             <h3 class="pain-points">Type yout own pain point</h3>
             <hr class="about">
-            <div class="col-md-2 new-block" style="background-color:#66CCCC;">
+            <div class="col-md-2 col-xs-8 new-block" style="background-color:#66CCCC;">
               <span v-show="!clicked" @click="changeInput()">Type new one here</span>
               <input ref="newPain" class="input-pain-point" v-show="clicked" type="text" v-model="newPainPoint">
               <div class="new-button">
                 <a @click="createPainPoints()" class="btn"><i class="fas fa-plus-circle"></i></a>
               </div>
             </div>
-            <div class="col-md-6 text">
+            <div class="col-md-6 col-xs-4 text">
               <span><i class="arrow-new fas fa-5x fa-chevron-right"></i></span>
             </div>
           </div>
-          <div class="col-md-8 col-xs-8">
+          <div class="col-md-8 col-xs-12">
             <div class="header-pain-point">
-              <div class="col-md-4 col-xs-4">
+              <div class="col-md-4 col-xs-8">
                 <h3 class="pain-points">your pain points</h3>
               </div>
-              <div class="col-md-8 col-xs-8 pull-right">
+              <div class="col-md-8 col-xs-4 pull-right">
                 <span><i class="fas fa-info"></i></span>
               </div>
             </div>
             <hr class="about">
             <div>
-              <div class="col-md-2 margin-blocks" :key="painPoint.ID" v-for="painPoint in painPoints">
+              <div class="col-md-2 col-xs-5 col-sm-3 margin-blocks" :key="painPoint.ID" v-for="painPoint in painPoints">
                 <div class="blocks" style="background-color:#669999;">
                   {{painPoint.name}}
                   <div class="buttons">
@@ -63,20 +63,20 @@
       </div>
       <div class="col-md-12 issues">
         <div class="row">
-          <div class="col-md-4">
-            <div class="col-md-4" style="margin-top: 35px;">
+          <div class="col-md-4 col-xs-12">
+            <div class="col-md-4 col-xs-12" style="margin-top: 35px;">
               <span><i class="fas fa-6x fa-exclamation-triangle"></i></span>
             </div>
-            <div class="col-md-3" style="margin-top: 67px;">
+            <div class="col-md-3 col-xs-8" style="margin-top: 67px;">
               <h2 style="display: inline; margin: 0;">Issues identified</h2>
             </div>
           </div>
-          <div class="col-md-8 col-xs-8">
+          <div class="col-md-8 col-xs-12">
             <div class="header-insights">
-              <div class="col-md-6 col-xs-6">
+              <div class="col-md-6 col-xs-8">
                 <h3 class="pain-points">issues connected to your Pain Points</h3>
               </div>
-              <div class="col-md-6 col-xs-6 pull-right">
+              <div class="col-md-6 col-xs-4 pull-right">
                 <span><i class="fas fa-info"></i></span>
               </div>
             </div>

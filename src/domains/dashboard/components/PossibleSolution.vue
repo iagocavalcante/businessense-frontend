@@ -18,7 +18,7 @@
     <div class="container" v-if="isLoad">
       <div class="col-md-12 col-xs-12"> 
         <div class="row">
-          <div style="border-bottom: 1px solid #000; padding-bottom: 24px;" class="col-md-4 col-xs-4">
+          <div class="col-md-4 col-xs-4 title-possible-solution">
             <h1 class="possible-solution-h1">Tell more to us about your insights</h1>
             <hr class="about">
             <div>
@@ -26,7 +26,7 @@
               <span><i class="head-icon"></i></span>
             </div>
           </div>
-          <div style="height: 225px; margin-top: 99px; border-bottom: 1px solid #000;" class="col-md-8 col-xs-8">
+          <div class="col-md-8 col-xs-8 solution-section">
             <hr class="about">
             <div>
               <div class="list-pain-points">
@@ -43,7 +43,7 @@
                         <p>{{solution.description}}</p>
                       </template>
                       <template slot="modal-footer">
-                        <p>{{solution.description}}</p>
+                        <p>{{solution.implementation}}</p>
                       </template>
                     </b-modal>
                   </li>
@@ -58,7 +58,7 @@
           <div style="text-align:center;">
             <h1 class="possible-solution-h1">Solution Constraints</h1>
             <div style="padding-bottom: 10px; height: 200px; overflow-x: auto;" class="col-md-12 col-xs-12">
-              <div class="col-md-3" :key="constraint.ID" v-for="constraint in possibleSolution.constraints">
+              <div class="col-md-3 col-xs-3" :key="constraint.ID" v-for="constraint in possibleSolution.constraints">
                 <div class="blocks possible-solution-h1" style="background-color:#669999;">
                   {{constraint.Constraint.name}}
                   <div class="possible-solution-h1 buttons">
@@ -140,6 +140,17 @@ export default {
 </script>
 
 <style scoped>
+.solution-section {
+  height: 225px;
+  margin-top: 99px;
+  border-bottom: 1px solid #000;
+}
+
+.title-possible-solution {
+  border-bottom: 1px solid #000;
+  padding-bottom: 24px;
+}
+
 .page-title {
   color: #fff;
   font-family: CircularStd-Book;
