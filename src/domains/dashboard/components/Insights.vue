@@ -20,17 +20,10 @@
         <div class="row">
           <div class="col-md-4 col-xs-12">
             <h1>Tell more to us about your insights</h1>
-            <h3 class="pain-points">Type yout own pain point</h3>
+            <h3 class="pain-points">Type your own pain point</h3>
             <hr class="about">
-            <div class="col-md-2 col-xs-8 new-block" style="background-color:#66CCCC;">
-              <span v-show="!clicked" @click="changeInput()">Type new one here</span>
-              <input ref="newPain" class="input-pain-point" v-show="clicked" type="text" v-model="newPainPoint">
-              <div class="new-button">
-                <a @click="createPainPoints()" class="btn"><i class="fas fa-plus-circle"></i></a>
-              </div>
-            </div>
-            <div class="col-md-6 col-xs-4 text">
-              <span><i class="arrow-new fas fa-5x fa-chevron-right"></i></span>
+            <div class="col-md-2 col-xs-8">
+              <b-autocomplete :isAsync="true"/>
             </div>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -99,16 +92,21 @@
 <script>
 import axios from 'axios'
 import { notification } from '@/support/utils/notification-mixin'
+import BAutocomplete from '@/components/BAutocomplete'
 
 export default {
   name: 'Insights',
   mixins: [notification],
+  components: {
+    BAutocomplete
+  },
   data: () => ({
     painPoints: [],
     newPainPoint: '',
     clicked: false,
     painPointsSelected: [],
-    issues: []
+    issues: [],
+    items: []
   }),
   mounted() {
     this.searchPainPoints()
@@ -202,6 +200,31 @@ export default {
 </script>
 
 <style scoped>
+.autocomplete {
+  position: relative;
+  width: 130px;
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 120px;
+  overflow: auto;
+}
+
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result:hover {
+  background-color: #4AAE9B;
+  color: white;
+}
+
 .input-pain-point {
   font-family: inherit;
   font-size: inherit;
