@@ -20,10 +20,16 @@
         <div class="row">
           <div class="col-md-4 col-xs-12">
             <h1>Tell more to us about your insights</h1>
-            <h3 class="pain-points">Type your own pain point</h3>
+            <h3 class="pain-points">Type your own pain point or add one</h3>
             <hr class="about">
             <div class="col-md-2 col-xs-8">
-              <b-autocomplete :isAsync="true"/>
+              <b-autocomplete :data="painPoints" field="name">
+                <template slot="ultima">
+                  <tr>
+                    <td>Type here new paint point</td>
+                  </tr>
+                </template>
+              </b-autocomplete>
             </div>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -105,8 +111,8 @@ export default {
     newPainPoint: '',
     clicked: false,
     painPointsSelected: [],
-    issues: [],
-    items: []
+    load: false,
+    issues: []
   }),
   mounted() {
     this.searchPainPoints()
@@ -121,7 +127,9 @@ export default {
         .then(response => {
           if ( response.data.status ) {
             this.painPoints = [...response.data.data]
+            this.load = true
           } else {
+            this.load = true
             throw new Error(`${response.data.message}`)
           }
         })

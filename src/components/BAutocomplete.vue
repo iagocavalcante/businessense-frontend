@@ -1,155 +1,117 @@
 <template>
-  <div class="autocomplete">
-    <input
-      type="text"
-      @input="onChange"
-      v-model="search"
-      @keydown.down="onArrowDown"
-      @keydown.up="onArrowUp"
-      @keydown.enter="onEnter"
-    />
-    <ul
-      id="autocomplete-results"
-      v-show="isOpen"
-      class="autocomplete-results"
-    >
-      <li
-        class="loading"
-        v-if="isLoading"
-      >
-        Loading results...
-      </li>
-      <li
-        v-else
-        v-for="(result, i) in results"
-        :key="i"
-        @click="setResult(result)"
-        class="autocomplete-result"
-        :class="{ 'is-active': i === arrowCounter }"
-      >
-        {{ result }}
-      </li>
-    </ul>
+  <div class="auto-complete">
+    <input type="text" v-model="input" @keydown.tab.prevent="complete()" @focus="focus(true)" @blur="focus(false)">
+    <table v-if="focused">
+      <tbody>
+        <tr :key="i" v-for="(painPoint, i) in data" v-if="filter(painPoint)" @mousedown="complete(i)">
+          <td>{{ painPoint[field] }}</td>
+        </tr>
+        <slot name="ultimo">
+        </slot>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
   export default {
     name: 'autocomplete',
-
     props: {
-      items: {
-        type: Array,
-        required: false,
-        default: () => [],
-      },
-      isAsync: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
-    },
-
-    data() {
-      return {
-        isOpen: false,
-        results: [],
-        search: '',
-        isLoading: false,
-        arrowCounter: 0,
-      };
+      value: { type: String, required: false},
+      data:  { type: Array, required: true},
+      field: { type: String, required: true}
     },
 
     methods: {
-      onChange() {
-        // Let's warn the parent that a change was made
-        this.$emit('input', this.search);
+      complete(i) {
+        if (i == undefined) {
+          for (let row of this.data) {
+            if (this.filter(row)) {
+              this.select(row)
+              return
+            }
+          }
+        }
 
-        // Is the data given by an outside ajax request?
-        if (this.isAsync) {
-          this.isLoading = true;
-        } else {
-          // Let's  our flat array
-          this.filterResults();
-          this.isOpen = true;
-        }
+        this.select(this.data[i])
       },
 
-      filterResults() {
-        // first uncapitalize all the things
-        this.results = this.items.filter((item) => {
-          return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-        });
+      select(row) {
+        this.input = row[this.field]
+        this.selected = true
       },
-      setResult(result) {
-        this.search = result;
-        this.isOpen = false;
+
+      filter(row) {
+        return row[this.field].toLowerCase().indexOf(this.input.toLowerCase()) != -1
       },
-      onArrowDown(evt) {
-        if (this.arrowCounter < this.results.length) {
-          this.arrowCounter = this.arrowCounter + 1;
-        }
-      },
-      onArrowUp() {
-        if (this.arrowCounter > 0) {
-          this.arrowCounter = this.arrowCounter -1;
-        }
-      },
-      onEnter() {
-        this.search = this.results[this.arrowCounter];
-        this.isOpen = false;
-        this.arrowCounter = -1;
-      },
-      handleClickOutside(evt) {
-        if (!this.$el.contains(evt.target)) {
-          this.isOpen = false;
-          this.arrowCounter = -1;
-        }
+
+      focus(f) {
+        this.focused = f
       }
     },
-    watch: {
-      items: function (val, oldValue) {
-        // actually compare them
-        if (val.length !== oldValue.length) {
-          this.results = val;
-          this.isLoading = false;
-        }
-      },
+      
+    data() {
+      return {
+        input: '',
+        focused: false
+      }
     },
-    mounted() {
-      document.addEventListener('click', this.handleClickOutside)
-    },
-    destroyed() {
-      document.removeEventListener('click', this.handleClickOutside)
+
+    created() {
+      this.input = this.value || ''
     }
   };
 </script>
 
 <style>
-  .autocomplete {
-    position: relative;
-  }
+  .form-group {
+  margin-bottom: 10px
+}
 
-  .autocomplete-results {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #eeeeee;
-    height: 120px;
-    overflow: auto;
-    width: 100%;
-  }
+input {
+  height: 35px;
+  border-radius: 3px;
+  border: 2px solid #888;
+  padding: 5px 10px;
+  transition: all 0.5s ease-out 0s;
+  width: 224px;
+}
 
-  .autocomplete-result {
-    list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    cursor: pointer;
-  }
+input:focus {
+  outline: none;
+  border-color: #2196F3;
+  border-radius: 0px;
+}
 
-  .autocomplete-result.is-active,
-  .autocomplete-result:hover {
-    background-color: #4AAE9B;
-    color: white;
-  }
+.auto-complete input.has-error {
+  border-color: #F44336;
+}
 
+.auto-complete table {
+  position: absolute;
+  width: 224px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  border: 2px solid #888;
+  border-top: 0px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.auto-complete table tr {
+  background: white;
+}
+
+.auto-complete table tr td {
+  padding: 10px
+}
+
+.auto-complete table tr:nth-child(even) {
+  background: #EEE;
+}
+
+.auto-complete table tr:hover {
+  background: #2196F3;
+  color: white;
+}
 </style>
