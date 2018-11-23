@@ -15,6 +15,7 @@
     "vue": "^2.5.17",
     "vue-notifications": "^0.9.0",
     "vue-router": "^3.0.1",
+    "vue-simple-suggest": "^1.8.2",
     "vuelidate": "^0.7.4",
     "vuelidate-error-extractor": "^2.2.2",
     "vuex": "^3.0.1"

@@ -22,14 +22,36 @@
             <h1>Tell more to us about your insights</h1>
             <h3 class="pain-points">Type your own pain point or add one</h3>
             <hr class="about">
-            <div class="col-md-2 col-xs-8">
-              <b-autocomplete :data="painPoints" field="name">
-                <template slot="ultima">
-                  <tr>
-                    <td>Type here new paint point</td>
-                  </tr>
-                </template>
+            <div class="col-md-6 col-xs-8">
+              <a style="cursor: pointer;" @click="openModal()">New Pain Point</a>
+              <b-autocomplete
+                :items="painPoints"
+                v-model="painPointSel">
               </b-autocomplete>
+              <b-modal :show="modalControl" @close="modalControl = false" :hasDefaultButton="false">
+                <template slot="modal-header">
+                  <h1>New Pain Point</h1>
+                </template>
+                <template slot="modal-body">
+                  <b-input
+                    :hasIcon="true"
+                    :placeholder="'Pain Point'"
+                    :type="'text'"
+                    :name="'paintPoint'"
+                    :id="'paintPoint'"
+                    v-model="newPainPoint"
+                    @blur="$v.newPainPoint.$touch()"  
+                  />
+                  <ul class="ContactForm__messages" v-if="$v.newPainPoint.$error">
+                    <li v-if="!$v.newPainPoint.required">
+                      This field is required.
+                    </li>
+                  </ul>
+                </template>
+                <template slot="modal-footer">
+                  <button @click="createPainPoints()" class="btn-next-step">Create</button>
+                </template>
+              </b-modal>
             </div>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -43,13 +65,10 @@
             </div>
             <hr class="about">
             <div>
-              <div class="col-md-2 col-xs-5 col-sm-3 margin-blocks" :key="painPoint.ID" v-for="painPoint in painPoints">
+              <div class="col-md-2 col-xs-5 col-sm-3 margin-blocks" :key="painPoint.ID" v-for="painPoint in points">
                 <div class="blocks" style="background-color:#669999;">
                   {{painPoint.name}}
                   <div class="buttons">
-                    <a @click="savePainPointSelected(painPoint.ID)" class="btn">
-                      <i class="fas fa-plus-circle"></i>
-                    </a>
                     <a @click="removePainPointSelected(painPoint.ID)" class="btn">
                       <i class="fas fa-minus-circle"></i>
                     </a>
@@ -97,22 +116,40 @@
 
 <script>
 import axios from 'axios'
+import { required } from 'vuelidate/lib/validators'
 import { notification } from '@/support/utils/notification-mixin'
 import BAutocomplete from '@/components/BAutocomplete'
+import BModal from '@/components/BModal'
+import BInput from '@/components/BInput'
 
 export default {
   name: 'Insights',
   mixins: [notification],
   components: {
-    BAutocomplete
+    BAutocomplete,
+    BModal,
+    BInput,
+  },
+  computed: {
+    painPointSel: {
+      get () {
+        return this.painPointSelected
+      },
+      set (value) {
+        this.savePainPointSelected(value.ID)
+        this.painPointSelected = value
+      }
+    }
   },
   data: () => ({
     painPoints: [],
     newPainPoint: '',
-    clicked: false,
+    modalControl: false,
     painPointsSelected: [],
     load: false,
-    issues: []
+    issues: [],
+    painPointSelected: {},
+    points: []
   }),
   mounted() {
     this.searchPainPoints()
@@ -135,8 +172,15 @@ export default {
         })
         .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
+    openModal () {
+      console.log('asçdlkasçdklça')
+      this.modalControl = !this.modalControl
+    },
     createPainPoints () {
       const name = this.newPainPoint
+      this.$v.newPainPoint.$touch()
+      // if its still pending or an error is returned do not submit
+      if (this.$v.newPainPoint.$pending || this.$v.newPainPoint.$error) return
       axios.post(`${process.env.VUE_APP_HOST}/painpoint/new`, { name })
         .then(response => {
           if ( response.data.status ) {
@@ -151,6 +195,8 @@ export default {
         .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
     savePainPointSelected ( id ) {
+      this.points.push(this.painPoints.filter(paintPoint => paintPoint.ID === id)[0])
+      console.log('asfasdfdasdafsfdas', id)
       if (this.painPointsSelected.find(paintPoint => paintPoint === id.toString())) {
         this.infoMsg('Pain Point', 'This pain point was selected')
         return
@@ -159,6 +205,7 @@ export default {
       this.getIssueList()
     },
     removePainPointSelected ( id ) {
+      this.points = this.points.filter(paintPoint => paintPoint.ID !== id)
       if (this.painPointsSelected.find(painPoint => painPoint === id.toString())) {
         this.painPointsSelected = this.painPointsSelected.filter(painPoint => painPoint !== id.toString())
         this.getIssueList()
@@ -203,34 +250,21 @@ export default {
       this.clicked = !this.clicked
       this.$refs.newPain.autofocus = true
     }
+  },
+  validations: {
+    newPainPoint: {
+      required
+    },
   }
 }
 </script>
 
 <style scoped>
-.autocomplete {
-  position: relative;
-  width: 130px;
-}
 
-.autocomplete-results {
-  padding: 0;
-  margin: 0;
-  border: 1px solid #eeeeee;
-  height: 120px;
-  overflow: auto;
-}
-
-.autocomplete-result {
-  list-style: none;
-  text-align: left;
-  padding: 4px 2px;
-  cursor: pointer;
-}
-
-.autocomplete-result:hover {
-  background-color: #4AAE9B;
-  color: white;
+.ContactForm__messages {
+  list-style-type: none;
+  padding-left: 0;
+  color: red;
 }
 
 .input-pain-point {
@@ -267,6 +301,22 @@ export default {
 .page-title > h1 {
   font-weight: 100;
   margin: 0;
+}
+
+.btn-next-step {
+  height: 40px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #323031;
+  color: #66CCCC;
+}
+
+.btn-next-step:active {
+  height: 40px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #323031;
+  color: #66CCCC;
 }
 
 .header-insights {
