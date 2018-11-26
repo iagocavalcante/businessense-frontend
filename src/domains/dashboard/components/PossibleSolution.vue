@@ -63,7 +63,7 @@
                   {{constraint.Constraint.name}}
                   <div class="possible-solution-h1 buttons">
                     <a class="possible-solution-h1 btn yes" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">yes</a>
-                    <a class="possible-solution-h1 btn" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">no</a>
+                    <!-- <a class="possible-solution-h1 btn" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">no</a> -->
                   </div>
                 </div>
               </div>
@@ -91,13 +91,16 @@ export default {
     isLoad: false,
     issueId: '',
     possibleSolution: [],
-    relevance: 0
+    relevance: 0,
+    constraints: []
   }),
   mounted () {
     this.issueId = window.sessionStorage.getItem('issueId')
     axios.get(`${process.env.VUE_APP_HOST}/solution/issue/${this.issueId}`)
       .then(response => {
         if ( response.data.status ) {
+            // this.constraints = [...new Set(response.data.constraints.map(constraint => constraint.ConstraintID).filter((value, index, self) => self.indexOf(value) === index))]
+            console.log(this.constraints)
             console.log(response.data)
             this.isLoad = true
             this.possibleSolution = {...response.data}

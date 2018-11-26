@@ -11,6 +11,24 @@
       display-attribute="name"
       value-attribute="id"
       class="suggestion">
+      <template slot="misc-item-above" slot-scope="{ suggestions, query }">
+        <!-- <div class="misc-item">
+          <span>You're searching for '{{ query }}'.</span>
+        </div> -->
+
+        <!-- Sub-template if have any suggestions -->
+        <template v-if="suggestions.length > 0">
+          <div class="misc-item">
+            <span>{{ suggestions.length }} suggestions are shown...</span>
+          </div>
+          <hr>
+        </template>
+
+        <!-- Show "No result" otherwise, if not loading new ones -->
+        <div class="misc-item" v-else>
+          <slot name="create-item"></slot>
+        </div>
+      </template>
       <input @input="onTextInput" v-model="text" />
       <button v-if="allowMultiple && onCustomText" @click="addCustomText()">+</button>
     </vue-simple-suggest>
@@ -109,6 +127,10 @@ export default {
 <style scoped>
 .form-group {
   margin-bottom: 10px
+}
+
+hr {
+  border-top: 1px solid #000;
 }
 
 input {

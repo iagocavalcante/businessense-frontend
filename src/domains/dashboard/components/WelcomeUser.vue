@@ -9,7 +9,6 @@
               <h2>We need to ask you 2 simple <br> questions to get started</h2>
             </div>
             <div>
-              <div class="col-md-2"></div>
               <div class="col-md-4">
                 <label class="label-left" for="What industry are you in?">What industry are you in?</label>
                 <div class="icon">
@@ -22,8 +21,20 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
+                  <label for="Company name">Company name</label>
+                  <input v-model="companyName" @focus="cleanPlaceholder($event)" class="form-industry text-center mt-10" placeholder="Company Name" type="text" name="" id="">
+                  <ul class="ContactForm__messages" v-if="$v.companyName.$error">
+                    <li v-if="!$v.companyName.required">
+                      This field is required.
+                    </li>
+                  </ul>
+                  <i class="input-icon"></i>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
                   <label for="What is your approximate montly revenue?">What is your approximate montly revenue?</label>
-                  <input v-model="revenue" class="form-industry text-center mt-10" placeholder="20.000 CAD" type="text" name="" id="">
+                  <input v-model="revenue" @focus="cleanPlaceholder($event)" class="form-industry text-center mt-10" placeholder="20.000 CAD" type="text" name="" id="">
                   <ul class="ContactForm__messages" v-if="$v.revenue.$error">
                     <li v-if="!$v.revenue.required">
                       This field is required.
@@ -39,7 +50,6 @@
                   
                 </div>
               </div>
-              <div class="col-md-2"></div>
               <div class="col-md-12" style="text-align:center;">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
@@ -98,6 +108,7 @@ export default {
   data: () => ({
     industry: '',
     revenue: '',
+    companyName: '',
     industryId: '',
     industries: [],
     modalControl: false,
@@ -110,6 +121,9 @@ export default {
     }, 2000)
   },
   methods: {
+    cleanPlaceholder (e) {
+      e.target.placeholder = ''
+    },
     searchIndustries () {
       axios.get(`${process.env.VUE_APP_HOST}/industry/search`)
         .then(response => {
@@ -139,17 +153,20 @@ export default {
         .catch(error => this.errorMsg('Industry', `${error}`))
     },
     goToInsights () {
-      const name = 'New Company'
+      const name = this.companyName
       const revenue = Number(this.revenue)
       const accountid = Number(window.localStorage.getItem('accountId'))
       const industryid = this.industryId
       this.$v.revenue.$touch()
+      this.$v.companyName.$touch()
       // if its still pending or an error is returned do not submit
       if (this.$v.revenue.$pending || this.$v.revenue.$error) return
+      if (this.$v.companyName.$pending || this.$v.companyName.$error) return
       axios.post(`${process.env.VUE_APP_HOST}/company/new`, { name, revenue, accountid, industryid })
         .then(response => {
           if ( response.data.status ) {
             this.$v.$reset()
+            this.successMsg('Company', 'Company was created')
             this.$router.push('/dashboard/insights')
           } else {
             throw new Error('Something went wrong when try create company')
@@ -163,6 +180,9 @@ export default {
       required
     },
     revenue: {
+      required
+    },
+    companyName: {
       required
     }
   }

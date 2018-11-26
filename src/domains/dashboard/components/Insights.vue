@@ -23,12 +23,15 @@
             <h3 class="pain-points">Type your own pain point or add one</h3>
             <hr class="about">
             <div class="col-md-6 col-xs-8">
-              <a style="cursor: pointer;" @click="openModal()">New Pain Point</a>
+              <!-- <a style="cursor: pointer;" @click="openModal()">New Pain Point</a> -->
               <b-autocomplete
                 :items="painPoints"
                 v-model="painPointSel">
+                <template slot="create-item">
+                  <a style="cursor: pointer;" @click="createPainPoints()">Create pain point</a>
+                </template>
               </b-autocomplete>
-              <b-modal :show="modalControl" @close="modalControl = false" :hasDefaultButton="false">
+              <!-- <b-modal :show="modalControl" @close="modalControl = false" :hasDefaultButton="false">
                 <template slot="modal-header">
                   <h1>New Pain Point</h1>
                 </template>
@@ -51,7 +54,7 @@
                 <template slot="modal-footer">
                   <button @click="createPainPoints()" class="btn-next-step">Create</button>
                 </template>
-              </b-modal>
+              </b-modal> -->
             </div>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -173,20 +176,16 @@ export default {
         .catch(error => this.errorMsg('Pain Points Error', `${error}`))
     },
     openModal () {
-      console.log('asçdlkasçdklça')
       this.modalControl = !this.modalControl
     },
     createPainPoints () {
-      const name = this.newPainPoint
-      this.$v.newPainPoint.$touch()
-      // if its still pending or an error is returned do not submit
-      if (this.$v.newPainPoint.$pending || this.$v.newPainPoint.$error) return
+      const name = this.$children[0].text
+
       axios.post(`${process.env.VUE_APP_HOST}/painpoint/new`, { name })
         .then(response => {
           if ( response.data.status ) {
             this.searchPainPoints()
-            this.newPainPoint = ''
-            this.clicked = false
+            this.$children[0].text = ''
             this.successMsg('Pain Point', 'Pain point created')
           } else {
             throw new Error(`${response.data.message}`)
