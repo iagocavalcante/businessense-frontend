@@ -31,15 +31,14 @@
             <div>
               <div class="list-pain-points">
                 <ul>
-                  <li @click="openModal()" :class="getStyle(calculate(solution.ID))" :key="solution.ID" v-for="solution in possibleSolution.solutions">
+                  <li @click="openModal(solution)" :class="getStyle(solution.relevance)" :key="solution.ID" v-for="solution in solutions">
                     <div class="possible-solution-h1 col-md-8">{{solution.name}}</div>
-                    <div class="possible-solution-h1 col-md-4">accuracy: {{getAccuracy(calculate(solution.ID))}}</div>
-                    <b-modal v-if="isLoad" :show="modalControl" @close="modalControl = false">
+                    <div class="possible-solution-h1 col-md-4">accuracy: {{solution.relevance}}</div>
+                    <b-modal v-if="isLoad" :show="solution.modalControl" @close="closeModal(solution)">
                       <template slot="modal-header">
                         <h1>{{solution.name}}</h1>
                       </template>
                       <template slot="modal-body">
-                        <p>{{solution.description}}</p>
                         <p>{{solution.description}}</p>
                       </template>
                       <template slot="modal-footer">
@@ -58,12 +57,13 @@
           <div style="text-align:center;">
             <h1 class="possible-solution-h1">Solution Constraints</h1>
             <div style="padding-bottom: 10px; height: 200px; overflow-x: auto;" class="col-md-12 col-xs-12">
-              <div class="col-md-3 col-xs-3" :key="constraint.ID" v-for="constraint in possibleSolution.constraints">
+              <div class="col-md-3 col-xs-3" :key="constraint.ID" v-for="constraint in constraints">
                 <div class="blocks possible-solution-h1" style="background-color:#669999;">
                   {{constraint.Constraint.name}}
                   <div class="possible-solution-h1 buttons">
-                    <a class="possible-solution-h1 btn yes" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">yes</a>
-                    <!-- <a class="possible-solution-h1 btn" @click="calculateSolution(constraint.SolutionID, constraint.Weight)">no</a> -->
+                    <a class="possible-solution-h1 btn yes" v-if="!constraint.asked" @click="saveConstraint(constraint)">yes</a>
+                    <!-- <a class="possible-solution-h1 btn" v-else @click="removeConstraint(constraint)">no</a> -->
+                    <a class="possible-solution-h1 btn" v-else>This constraint is added</a>
                   </div>
                 </div>
               </div>
@@ -87,38 +87,102 @@ export default {
     BModal
   },
   data: () => ({
-    modalControl: false,
     isLoad: false,
     issueId: '',
     possibleSolution: [],
-    relevance: 0,
-    constraints: []
+    solutions: [],
+    constraints: [],
+    constraintsSelected: []
   }),
   mounted () {
     this.issueId = window.sessionStorage.getItem('issueId')
     axios.get(`${process.env.VUE_APP_HOST}/solution/issue/${this.issueId}`)
       .then(response => {
         if ( response.data.status ) {
-            // this.constraints = [...new Set(response.data.constraints.map(constraint => constraint.ConstraintID).filter((value, index, self) => self.indexOf(value) === index))]
-            console.log(this.constraints)
-            console.log(response.data)
-            this.isLoad = true
-            this.possibleSolution = {...response.data}
-          } else {
-            throw new Error(`${response.data.message}`)
-          }
-        })
-        .catch(error => this.errorMsg('Solution', `${error}`))
+          this.constraints = this.removeDuplicateConstraints(response.data.constraints)
+          this.solutions = [...response.data.solutions]
+          this.solutions.forEach((solution, index) => {
+            solution.modalControl = false
+            solution.relevance = 1
+            this.$set(this.solutions, index, solution)
+          })
+          this.constraints.forEach((constraint, index) => {
+            constraint.asked = false
+            this.$set(this.constraints, index, constraint)
+          })
+          this.possibleSolution = {...response.data}
+          this.isLoad = true
+        } else {
+          throw new Error(`${response.data.message}`)
+        }
+      })
+      .catch(error => this.errorMsg('Solution', `${error}`))
   },
   methods: {
-    openModal () {
-      this.modalControl =  !this.modalControl
+    openModal ( solution ) {
+      this.solutions.forEach((sol, index) => {
+        if (sol.ID === solution.ID) {
+          sol.modalControl = !sol.modalControl
+        }
+        this.$set(this.solutions, index, sol)
+      })
     },
-    calculateSolution ( id, value ) {
-      this.relevance = this.possibleSolution.constraints.find( constraint => id === constraint.SolutionID).Weight
+    closeModal ( solution ) {
+      this.solutions.forEach((sol, index) => {
+        if (sol.ID === solution.ID) {
+          sol.modalControl = false
+        }
+        this.$set(this.solutions, index, sol)
+      })
     },
-    calculate ( id ) {
-      return this.possibleSolution.constraints.find( constraint => id === constraint.SolutionID).Weight
+    removeDuplicateConstraints ( constraints ) {
+      return constraints.filter((constraint, index, self) =>
+            index === self.findIndex((t) => (
+              t.ConstraintID === constraint.ConstraintID
+            ))
+          )
+    },
+    calculateSolution ( ) {
+      this.constraintsSelected.forEach(constraintSelected => {
+        this.solutions.forEach((solution, index) => {
+          this.possibleSolution.constraints.forEach(constraint => {
+            if(constraint.SolutionID === solution.ID && constraint.ConstraintID === constraintSelected.ConstraintID) {
+              solution.relevance *= constraintSelected.Weight
+            }
+          })
+        })
+      })
+    },
+    // removeSolution ( ) {
+    //   this.constraintsSelected.forEach(constraintSelected => {
+    //     this.solutions.forEach((solution, index) => {
+    //       this.possibleSolution.constraints.forEach(constraint => {
+    //         if(constraint.SolutionID === solution.ID && constraint.ConstraintID === constraintSelected.ConstraintID) {
+    //           solution.relevance /= constraintSelected.Weight
+    //         }
+    //       })
+    //     })
+    //   })
+    // },
+    saveConstraint ( constraint ) {
+      this.constraints.forEach((con, index) => {
+        if (con.ConstraintID === constraint.ConstraintID ) {
+          con.asked = true
+        }
+        this.$set(this.constraints, index, con)
+      })
+      this.constraintsSelected.push(constraint)
+      this.calculateSolution()
+    },
+    removeConstraint ( constraint ) {
+      this.constraints.forEach((con, index) => {
+        if (con.ConstraintID === constraint.ConstraintID ) {
+          con.asked = false
+        }
+        this.$set(this.constraints, index, con)
+      })
+      this.constraintsSelected.filter(con => con !== constraint)
+      this.removeSolution()
     },
     getAccuracy( value ) {
       if (value > 0 && value <= 0.333 ) {
