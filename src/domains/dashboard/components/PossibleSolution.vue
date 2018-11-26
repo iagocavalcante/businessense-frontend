@@ -33,7 +33,7 @@
                 <ul>
                   <li @click="openModal(solution)" :class="getStyle(solution.relevance)" :key="solution.ID" v-for="solution in solutions">
                     <div class="possible-solution-h1 col-md-8">{{solution.name}}</div>
-                    <div class="possible-solution-h1 col-md-4">accuracy: {{solution.relevance}}</div>
+                    <div class="possible-solution-h1 col-md-4">accuracy: {{getAccuracy(solution.relevance)}}</div>
                     <b-modal v-if="isLoad" :show="solution.modalControl" @close="closeModal(solution)">
                       <template slot="modal-header">
                         <h1>{{solution.name}}</h1>
