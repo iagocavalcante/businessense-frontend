@@ -74,7 +74,10 @@ export default {
       this.loading = true
       this.$v.loginForm.$touch()
       // if its still pending or an error is returned do not submit
-      if (this.$v.loginForm.$pending || this.$v.loginForm.$error) return
+      if (this.$v.loginForm.$pending || this.$v.loginForm.$error) {
+        this.loading = false
+        return
+      }
       
       const email = this.loginForm.email 
       const password = this.loginForm.password
