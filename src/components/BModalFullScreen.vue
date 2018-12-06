@@ -1,6 +1,6 @@
 <template>
     <!-- The overlay -->
-  <div id="myNav" :style="modalControl ? 'width:100%' : 'width:100%'" class="overlay">
+  <div id="myNav" :style="modalControl ? 'width:100%' : 'width:0'" class="overlay">
 
     <!-- Button to close the overlay navigation -->
     <span class="closebtn" @click="closeModal"><i class="fas fa-times-circle"></i></span>
@@ -83,7 +83,7 @@ export default {
 /* Position the close button (top right corner) */
 .overlay .closebtn {
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 45px;
   font-size: 40px;
   cursor: pointer;

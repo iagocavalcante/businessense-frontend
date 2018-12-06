@@ -1,104 +1,101 @@
 <template>
-  <b-modal-full-screen :show="modalControl" @close="closeModal()">
-    <template slot="content">
-      
+  <div>
+    <div class="col-md-12 col-xs-12"> 
+      <div class="row">
+        <div class="page-title">
+          <!-- <div style="text-align: start;" class="container">
+            <a class="a-page-title" href="">
+              <span>
+                <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
+              </span>
+              Back to dashboard
+            </a>
+          </div> -->
+          <h1>Innefective fixes cost budge</h1>
+          <div style="text-align: end;" class="container">
+            <p href="">Accuracy: <span style="color: #669999">High</span></p>
+            <p href="">Risk: <span style="color: #669999">medium</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-top: 30px;" v-if="isLoad">
+      <div style="border-bottom: 1px solid black; margint-top: 30px;" class="col-md-12 col-xs-12"> 
+        <div class="row">
+          <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
+            <div class="col-md-2">
+              <span><i class="orange-icon mt-20 far fa-5x fa-file-alt"></i></span>
+              <h1 class="risks-h1">Description</h1>
+            </div>
+          </div>
+          <div style="padding: 10px;" class="col-md-8 col-xs-8">
+            <p class="sugestions">{{risk.description}}</p>
+          </div>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
+        <div class="row">
+          <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
+            <div class="col-md-2">
+              <span><i class="orange-icon mt-20 fas fa-5x fa-chart-line"></i></span>
+              <h1 class="risks-h1">Stats</h1>
+            </div>
+          </div>
+          <div style="padding: 10px;" class="col-md-8 col-xs-8">
+            <p class="sugestions">{{risk.stats}}</p>
+          </div>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
+        <div class="row pt-20">
+          <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
+            <span><i class="orange-icon mt-20 fas fa-5x fa-map-marker-alt"></i></span>
+            <h1 class="risks-h1">Usual Pain
+              <br>Points</h1>
+          </div>
+          <div style="padding-bottom: 10px;" class="col-md-8 col-xs-8">
+            <div>
+              <div class="col-md-3">
+                <div class="blocks medium">
+                  Decreasing
+                  profits
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="blocks high">
+                  Decreasing
+                  profits
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="blocks low">
+                  Decreasing
+                  profits
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="blocks low">
+                  Decreasing
+                  profits
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12 col-xs-12"> 
         <div class="row">
-          <div class="page-title">
-            <!-- <div style="text-align: start;" class="container">
-              <a class="a-page-title" href="">
-                <span>
-                  <i style="margin-right: 5px;" class="arrow-new fas fa-chevron-left"></i>
-                </span>
-                Back to dashboard
-              </a>
-            </div> -->
-            <h1>Innefective fixes cost budge</h1>
-            <div style="text-align: end;" class="container">
-              <p href="">Accuracy: <span style="color: #669999">High</span></p>
-              <p href="">Risk: <span style="color: #669999">medium</span></p>
-            </div>
+          <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
+            <h1 class="risks-h1">Risks Factors</h1>
+          </div>
+          <div style="padding: 10px;" class="col-md-8 col-xs-8">
+            <p class="sugestions">{{risk.riskfactors}}</p>
           </div>
         </div>
       </div>
-      <div class="container" style="padding-top: 30px;" v-if="isLoad">
-        <div style="border-bottom: 1px solid black; margint-top: 30px;" class="col-md-12 col-xs-12"> 
-          <div class="row">
-            <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
-              <div class="col-md-2">
-                <span><i class="orange-icon mt-20 far fa-5x fa-file-alt"></i></span>
-                <h1 class="risks-h1">Description</h1>
-              </div>
-            </div>
-            <div style="padding: 10px;" class="col-md-8 col-xs-8">
-              <p class="sugestions">{{risk.description}}</p>
-            </div>
-          </div>
-        </div>
-        <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
-          <div class="row">
-            <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
-              <div class="col-md-2">
-                <span><i class="orange-icon mt-20 fas fa-5x fa-chart-line"></i></span>
-                <h1 class="risks-h1">Stats</h1>
-              </div>
-            </div>
-            <div style="padding: 10px;" class="col-md-8 col-xs-8">
-              <p class="sugestions">{{risk.stats}}</p>
-            </div>
-          </div>
-        </div>
-        <div style="border-bottom: 1px solid black;" class="col-md-12 col-xs-12"> 
-          <div class="row pt-20">
-            <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
-              <span><i class="orange-icon mt-20 fas fa-5x fa-map-marker-alt"></i></span>
-              <h1 class="risks-h1">Usual Pain
-                <br>Points</h1>
-            </div>
-            <div style="padding-bottom: 10px;" class="col-md-8 col-xs-8">
-              <div>
-                <div class="col-md-3">
-                  <div class="blocks medium">
-                    Decreasing
-                    profits
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="blocks high">
-                    Decreasing
-                    profits
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="blocks low">
-                    Decreasing
-                    profits
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="blocks low">
-                    Decreasing
-                    profits
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-xs-12"> 
-          <div class="row">
-            <div style="padding-bottom: 10px; margin-right: 10px;" class="col-md-3 col-xs-3">
-              <h1 class="risks-h1">Risks Factors</h1>
-            </div>
-            <div style="padding: 10px;" class="col-md-8 col-xs-8">
-              <p class="sugestions">{{risk.riskfactors}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <possible-solution/>
-    </template>
-  </b-modal-full-screen>
+    </div>
+    <possible-solution/>
+  </div>
 </template>
 
 <script>
@@ -118,10 +115,8 @@ export default {
     risk: {},
     isLoad: false,
     issueId: '',
-    modalControl: false
   }),
   mounted () {
-    this.modalControl = true
     this.issueId = window.sessionStorage.getItem('issueId')
     axios.get(`${process.env.VUE_APP_HOST}/issue/${this.issueId}`)
       .then(response => {
@@ -133,12 +128,6 @@ export default {
           }
         })
         .catch(error => this.errorMsg('Risk', `${error}`))
-  },
-  methods: {
-    closeModal () {
-      this.modalControl = false
-      this.$router.go(-1)
-    }
   }
 }
 </script>

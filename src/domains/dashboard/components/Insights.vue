@@ -23,7 +23,6 @@
             <h3 class="pain-points">Type your own pain point or add one</h3>
             <hr class="about">
             <div class="col-md-6 col-xs-8">
-              <!-- <a style="cursor: pointer;" @click="openModal()">New Pain Point</a> -->
               <b-autocomplete
                 :items="painPoints"
                 v-model="painPointSel">
@@ -31,30 +30,6 @@
                   <a style="cursor: pointer;" @click="createPainPoints()">Create pain point</a>
                 </template>
               </b-autocomplete>
-              <!-- <b-modal :show="modalControl" @close="modalControl = false" :hasDefaultButton="false">
-                <template slot="modal-header">
-                  <h1>New Pain Point</h1>
-                </template>
-                <template slot="modal-body">
-                  <b-input
-                    :hasIcon="true"
-                    :placeholder="'Pain Point'"
-                    :type="'text'"
-                    :name="'paintPoint'"
-                    :id="'paintPoint'"
-                    v-model="newPainPoint"
-                    @blur="$v.newPainPoint.$touch()"  
-                  />
-                  <ul class="ContactForm__messages" v-if="$v.newPainPoint.$error">
-                    <li v-if="!$v.newPainPoint.required">
-                      This field is required.
-                    </li>
-                  </ul>
-                </template>
-                <template slot="modal-footer">
-                  <button @click="createPainPoints()" class="btn-next-step">Create</button>
-                </template>
-              </b-modal> -->
             </div>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -114,6 +89,11 @@
         </div>
       </div>
     </div>
+    <b-modal-full-screen :show="modalControlRisk" @close="modalControlRisk = false">
+      <template slot="content">
+        <risk/>
+      </template>
+    </b-modal-full-screen>
   </div>
 </template>
 
@@ -123,7 +103,9 @@ import { required } from 'vuelidate/lib/validators'
 import { notification } from '@/support/utils/notification-mixin'
 import BAutocomplete from '@/components/BAutocomplete'
 import BModal from '@/components/BModal'
+import BModalFullScreen from '@/components/BModalFullScreen'
 import BInput from '@/components/BInput'
+import Risk from '@/domains/dashboard/components/Risk'
 
 export default {
   name: 'Insights',
@@ -132,6 +114,8 @@ export default {
     BAutocomplete,
     BModal,
     BInput,
+    BModalFullScreen,
+    Risk
   },
   computed: {
     painPointSel: {
@@ -148,6 +132,7 @@ export default {
     painPoints: [],
     newPainPoint: '',
     modalControl: false,
+    modalControlRisk: false,
     painPointsSelected: [],
     load: false,
     issues: [],
@@ -160,7 +145,7 @@ export default {
   methods: {
     goToRisk ( id ) {
       window.sessionStorage.setItem('issueId', id)
-      this.$router.push('/dashboard/risks')
+      this.modalControlRisk = true
     },
     searchPainPoints () {
       axios.get(`${process.env.VUE_APP_HOST}/painpoint/search`)
