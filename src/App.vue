@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <b-navbar></b-navbar>
+    <!-- <b-navbar-transparent></b-navbar-transparent> -->
     <main>
       <router-view/>
     </main>
@@ -11,12 +12,14 @@
 <script>
 import BFooter from './components/BFooter'
 import BNavbar from './components/BNavbar'
+import BNavbarTransparent from './components/BNavbarTransparent'
 
 export default {
   name: 'App',
   components: {
     BFooter,
-    BNavbar
+    BNavbar,
+    BNavbarTransparent
   }
 }
 </script>
@@ -49,7 +52,7 @@ main {
   flex-grow: 1;
 }
 
-header, main, footer {
+main, footer {
   flex-shrink: 0;
 }
 

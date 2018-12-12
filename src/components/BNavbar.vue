@@ -1,19 +1,19 @@
 <template>
   <article>
-    <header>
+    <header :class="checkRoute() === 'home' ? 'header-zindex' : ''">
       <nav class="container navbar" id="nav">
         <div class="row">
           <div class="col-md-6">
             <a href="/">
-              <img class="logo" src="./../assets/img/bsense_rgb_verde.png" alt="">
+              <img class="logo" src="./../assets/img/bsense_rgb_verde.png" alt>
             </a>
           </div>
           <div class="col-md-6">
             <div class="menu">
-              <router-link class="menu-link" to="/">about</router-link>
-              <router-link class="menu-link" to="login">sign in</router-link>
-              <router-link class="menu-link" to="/about">try it</router-link>
-              <router-link class="menu-link" to="/about">help</router-link>
+              <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="/">about</router-link>
+              <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="login">sign in</router-link>
+              <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="/about">try it</router-link>
+              <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="/about">help</router-link>
             </div>
           </div>
         </div>
@@ -25,18 +25,18 @@
 <script>
 export default {
   name: 'BNavbar',
-  mounted() {
+  mounted () {
     this.checkRoute()
   },
   methods: {
-    checkRoute () {
-      console.log(this.$router.currentRoute)
+    checkRoute() {
+      return this.$router.currentRoute.name
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .menu {
   text-align: center;
   padding-top: 28px;
@@ -49,7 +49,15 @@ export default {
 }
 
 header {
-  background-color: #FAF4EB;
+  background-color: #faf4eb;
+}
+
+.header-zindex {
+  background-color: transparent;
+  border: none;
+  color: white;
+  z-index: 100;
+  transition: background-color 1s ease 0s;
 }
 
 .logo {
@@ -58,21 +66,33 @@ header {
 }
 
 .menu-link {
+  transition: opacity 0.125s linear;
   color: #373737;
   font-size: 22px;
   margin-right: 20px;
 }
 
+.menu-link-zindex {
+  color: #373737;
+  font-size: 22px;
+  margin-right: 20px;
+}
 .menu-link:hover {
   text-decoration: none;
-  color: #65DFBE;
-  border-bottom: 2.5px solid #65DFBE;
+  color: #65dfbe;
+  border-bottom: 2.5px solid #65dfbe;
+}
+
+.menu-link-zindex:hover {
+  text-decoration: none;
+  color: white;
+  border-bottom: 2.5px solid #65dfbe;
 }
 
 .menu-link:active {
   text-decoration: none;
-  color: #65DFBE;
-  border-bottom: 2.5px solid #65DFBE;
+  color: #65dfbe;
+  border-bottom: 2.5px solid #65dfbe;
 }
 
 article {
@@ -81,5 +101,4 @@ article {
   flex-direction: column;
   align-items: stretch;
 }
-
 </style>

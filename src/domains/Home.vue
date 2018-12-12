@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="col-xs-12 home">
+    <div class="image">
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6" style="padding: 90px">
             <h1>
               Need help with 
               your business?
@@ -15,33 +15,36 @@
               Now.
             </h1>
           </div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4"></div>
+          <div class="col-md-6"></div>
+          
         </div>
       </div>
     </div>
+    
     <div class="container section">
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-6">
           <h1>Better management means 
-better results: 
-40% higher growth, 
-140% higher profits and 
-75% higher employee 
-productivity*
+            better results: 
+            40% higher growth, 
+            140% higher profits and 
+            75% higher employee 
+            productivity*
 
-But identifying what will 
-really make a difference in your 
-business can be overwhelming</h1>
+            But identifying what will 
+            really make a difference in your 
+            business can be overwhelming
+          </h1>
         </div>
         <div class="col-md-5"></div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
+    <div class="container whatis">
+      <div class="row" style="display: table-cell;
+    vertical-align: middle;">
         <div class="col-md-2"></div>
-        <div style="text-align: center;" class="col-md-8">
+        <div style="text-align: center; vertical-align: middle;" class="col-md-8">
           <h1>What is businessense</h1>
           <h3>Businessense is a platform for small and medium business owners. 
   We diagnose your major opportunities, get you spot-on, 
@@ -60,7 +63,30 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.image {
+  background-color: #490d40;
+  background: url("./../assets/img/login.jpg")
+    no-repeat center center;
+  background-size: cover;
+  height: 518px;
+  margin-top: -20px;
+}
+.image::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    rgba(101, 223, 190, 1) 0.01%,
+    rgba(250, 250, 250, 0.1) 150%
+  );
+}
+
 .home {
   display: block;
   position: relative;
@@ -102,9 +128,15 @@ export default {
   height: 100%;
   background-image: linear-gradient(
     90deg,
-    rgba(101, 223, 190, 1) 0.01%,
+    rgba(250, 244, 235, 1) 0.01%,
     rgba(250, 250, 250, 0.1) 150%
   );
+}
+
+.whatis {
+  background-color: #65DFBE;
+  height: 312px;
+  display: table;
 }
 </style>
 
