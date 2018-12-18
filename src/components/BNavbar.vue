@@ -14,6 +14,7 @@
               <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="login">sign in</router-link>
               <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="/about">try it</router-link>
               <router-link :class="checkRoute() === 'home' ? 'menu-link-zindex' : 'menu-link'" to="/about">help</router-link>
+              <a href="javascript:void(0)" class="menu-link" v-if="checkRoute() === 'welcome'" @click="logout">logout</a>
             </div>
           </div>
         </div>
@@ -26,11 +27,17 @@
 export default {
   name: 'BNavbar',
   mounted () {
-    this.checkRoute()
+    setTimeout(() => {
+      this.checkRoute()
+    })
   },
   methods: {
     checkRoute() {
-      return this.$router.currentRoute.name
+      return window.localStorage.getItem('routeName')
+    },
+    logout () {
+      window.localStorage.clear();
+      this.$router.push('/')
     }
   }
 }

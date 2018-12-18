@@ -34,7 +34,7 @@
                   <li @click="openModal(solution)" :class="getStyle(solution.relevance)" :key="solution.ID" v-for="solution in solutions">
                     <div class="possible-solution-h1 col-md-8">{{solution.name}}</div>
                     <div class="possible-solution-h1 col-md-4">accuracy: {{getAccuracy(solution.relevance)}}</div>
-                    <b-modal v-if="isLoad" :show="solution.modalControl" @close="closeModal(solution)">
+                    <b-modal v-if="isLoad" @doAction="addSolutionToPlain(solution)" :show="solution.modalControl" @close="closeModal(solution)">
                       <template slot="modal-header">
                         <h1>{{solution.name}}</h1>
                       </template>
@@ -96,6 +96,7 @@ export default {
   }),
   mounted () {
     this.issueId = window.sessionStorage.getItem('issueId')
+    console.log('ISSUE => ', this.issueId)
     axios.get(`${process.env.VUE_APP_HOST}/solution/issue/${this.issueId}`)
       .then(response => {
         if ( response.data.status ) {
@@ -119,6 +120,9 @@ export default {
       .catch(error => this.errorMsg('Solution', `${error}`))
   },
   methods: {
+    addSolutionToPlain (solution) {
+      console.log(solution)
+    },
     openModal ( solution ) {
       this.solutions.forEach((sol, index) => {
         if (sol.ID === solution.ID) {

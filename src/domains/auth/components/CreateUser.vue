@@ -189,7 +189,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .create-form {
   position: relative;
   width: 270px;

@@ -65,12 +65,9 @@ export default {
 
 <style lang="scss" scoped>
 .image {
-  background-color: #490d40;
   background: url("./../assets/img/login.jpg")
     no-repeat center center;
   background-size: cover;
-  height: 518px;
-  margin-top: -20px;
 }
 .image::before {
   content: "";
@@ -79,7 +76,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 475px;
   background-image: linear-gradient(
     90deg,
     rgba(101, 223, 190, 1) 0.01%,
@@ -137,6 +134,7 @@ export default {
   background-color: #65DFBE;
   height: 312px;
   display: table;
+  width: 100%;
 }
 </style>
 

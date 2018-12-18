@@ -89,7 +89,7 @@
         </div>
       </div>
     </div>
-    <b-modal-full-screen :show="modalControlRisk" @close="modalControlRisk = false">
+    <b-modal-full-screen v-if="modalControlRisk" :show="modalControlRisk" @close="modalControlRisk = false">
       <template slot="content">
         <risk/>
       </template>

@@ -12,7 +12,7 @@
       <div class="modal-footer">
         <slot name="modal-footer"></slot>
         <div class="center" v-if="hasDefaultButton">
-          <button class="btn-modal">ADD<br>this solution to your action plan</button>
+          <button @click="doAction" class="btn-modal">ADD<br>this solution to your action plan</button>
         </div>
       </div>
     </div>
@@ -45,6 +45,9 @@ export default {
   methods: {
     closeModal () {
       this.$emit('close')
+    },
+    doAction () {
+      this.$emit('doAction')
     }
   }
 }

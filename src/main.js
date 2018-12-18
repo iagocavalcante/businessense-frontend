@@ -33,6 +33,7 @@ if (token) {
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
+  window.localStorage.setItem('routeName', to.name)
   if (!to.matched.some(record => record.meta.free)) {
     if (store.getters['Login/isLoggedIn']) {
       next()
