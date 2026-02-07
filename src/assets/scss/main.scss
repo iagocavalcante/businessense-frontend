@@ -1,0 +1,32 @@
+// Bootstrap 5
+@import "bootstrap/scss/bootstrap";
+
+// Custom font (copy from old project if needed)
+@font-face {
+  font-family: 'CircularStd';
+  src: url('../fonts/CircularStd-Book.otf') format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('../fonts/CircularStd-Medium.otf') format('opentype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('../fonts/CircularStd-Black.otf') format('opentype');
+  font-weight: 900;
+}
+
+// Base styles
+body {
+  font-family: 'CircularStd', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+// Utility classes from old project
+.pt-6 { padding-top: 4rem !important; }
+.pb-6 { padding-bottom: 4rem !important; }
+.mt-6 { margin-top: 4rem !important; }
+.mb-6 { margin-bottom: 4rem !important; }
